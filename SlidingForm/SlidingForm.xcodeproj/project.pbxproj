@@ -1,0 +1,345 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ED660C501DA94DF400411874 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C4F1DA94DF400411874 /* AppDelegate.swift */; };
+		ED660C521DA94DF400411874 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C511DA94DF400411874 /* ViewController.swift */; };
+		ED660C551DA94DF400411874 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED660C531DA94DF400411874 /* Main.storyboard */; };
+		ED660C571DA94DF400411874 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED660C561DA94DF400411874 /* Assets.xcassets */; };
+		ED660C5A1DA94DF400411874 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED660C581DA94DF400411874 /* LaunchScreen.storyboard */; };
+		ED660C671DA94E1300411874 /* SlidingFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C611DA94E1300411874 /* SlidingFormViewController.swift */; };
+		ED660C681DA94E1300411874 /* SlidingFormPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C621DA94E1300411874 /* SlidingFormPage.swift */; };
+		ED660C691DA94E1300411874 /* SlidingFormElementCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C631DA94E1300411874 /* SlidingFormElementCheckbox.swift */; };
+		ED660C6A1DA94E1300411874 /* SlidingFormElementRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C641DA94E1300411874 /* SlidingFormElementRatio.swift */; };
+		ED660C6B1DA94E1300411874 /* SlidingFormPageConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C651DA94E1300411874 /* SlidingFormPageConfig.swift */; };
+		ED660C6C1DA94E1300411874 /* SlidingFormElementSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C661DA94E1300411874 /* SlidingFormElementSwitch.swift */; };
+		ED660C711DA9506C00411874 /* SlidingForm.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED660C701DA9506C00411874 /* SlidingForm.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		ED660C4C1DA94DF400411874 /* SlidingForm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlidingForm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED660C4F1DA94DF400411874 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		ED660C511DA94DF400411874 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		ED660C541DA94DF400411874 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		ED660C561DA94DF400411874 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ED660C591DA94DF400411874 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		ED660C5B1DA94DF400411874 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ED660C611DA94E1300411874 /* SlidingFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormViewController.swift; sourceTree = "<group>"; };
+		ED660C621DA94E1300411874 /* SlidingFormPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormPage.swift; sourceTree = "<group>"; };
+		ED660C631DA94E1300411874 /* SlidingFormElementCheckbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormElementCheckbox.swift; sourceTree = "<group>"; };
+		ED660C641DA94E1300411874 /* SlidingFormElementRatio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormElementRatio.swift; sourceTree = "<group>"; };
+		ED660C651DA94E1300411874 /* SlidingFormPageConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormPageConfig.swift; sourceTree = "<group>"; };
+		ED660C661DA94E1300411874 /* SlidingFormElementSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormElementSwitch.swift; sourceTree = "<group>"; };
+		ED660C701DA9506C00411874 /* SlidingForm.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SlidingForm.storyboard; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ED660C491DA94DF400411874 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ED660C431DA94DF400411874 = {
+			isa = PBXGroup;
+			children = (
+				ED660C4E1DA94DF400411874 /* SlidingForm */,
+				ED660C4D1DA94DF400411874 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ED660C4D1DA94DF400411874 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ED660C4C1DA94DF400411874 /* SlidingForm.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ED660C4E1DA94DF400411874 /* SlidingForm */ = {
+			isa = PBXGroup;
+			children = (
+				ED660C6D1DA94E2200411874 /* SlidingFormLib */,
+				ED660C4F1DA94DF400411874 /* AppDelegate.swift */,
+				ED660C511DA94DF400411874 /* ViewController.swift */,
+				ED660C531DA94DF400411874 /* Main.storyboard */,
+				ED660C561DA94DF400411874 /* Assets.xcassets */,
+				ED660C581DA94DF400411874 /* LaunchScreen.storyboard */,
+				ED660C5B1DA94DF400411874 /* Info.plist */,
+			);
+			path = SlidingForm;
+			sourceTree = "<group>";
+		};
+		ED660C6D1DA94E2200411874 /* SlidingFormLib */ = {
+			isa = PBXGroup;
+			children = (
+				ED660C611DA94E1300411874 /* SlidingFormViewController.swift */,
+				ED660C621DA94E1300411874 /* SlidingFormPage.swift */,
+				ED660C631DA94E1300411874 /* SlidingFormElementCheckbox.swift */,
+				ED660C641DA94E1300411874 /* SlidingFormElementRatio.swift */,
+				ED660C651DA94E1300411874 /* SlidingFormPageConfig.swift */,
+				ED660C661DA94E1300411874 /* SlidingFormElementSwitch.swift */,
+				ED660C701DA9506C00411874 /* SlidingForm.storyboard */,
+			);
+			name = SlidingFormLib;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ED660C4B1DA94DF400411874 /* SlidingForm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED660C5E1DA94DF400411874 /* Build configuration list for PBXNativeTarget "SlidingForm" */;
+			buildPhases = (
+				ED660C481DA94DF400411874 /* Sources */,
+				ED660C491DA94DF400411874 /* Frameworks */,
+				ED660C4A1DA94DF400411874 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SlidingForm;
+			productName = SlidingForm;
+			productReference = ED660C4C1DA94DF400411874 /* SlidingForm.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ED660C441DA94DF400411874 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = Ant;
+				TargetAttributes = {
+					ED660C4B1DA94DF400411874 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = SLMFH6GDG4;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = ED660C471DA94DF400411874 /* Build configuration list for PBXProject "SlidingForm" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ED660C431DA94DF400411874;
+			productRefGroup = ED660C4D1DA94DF400411874 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ED660C4B1DA94DF400411874 /* SlidingForm */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ED660C4A1DA94DF400411874 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED660C5A1DA94DF400411874 /* LaunchScreen.storyboard in Resources */,
+				ED660C571DA94DF400411874 /* Assets.xcassets in Resources */,
+				ED660C551DA94DF400411874 /* Main.storyboard in Resources */,
+				ED660C711DA9506C00411874 /* SlidingForm.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ED660C481DA94DF400411874 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED660C521DA94DF400411874 /* ViewController.swift in Sources */,
+				ED660C691DA94E1300411874 /* SlidingFormElementCheckbox.swift in Sources */,
+				ED660C671DA94E1300411874 /* SlidingFormViewController.swift in Sources */,
+				ED660C6C1DA94E1300411874 /* SlidingFormElementSwitch.swift in Sources */,
+				ED660C6A1DA94E1300411874 /* SlidingFormElementRatio.swift in Sources */,
+				ED660C501DA94DF400411874 /* AppDelegate.swift in Sources */,
+				ED660C6B1DA94E1300411874 /* SlidingFormPageConfig.swift in Sources */,
+				ED660C681DA94E1300411874 /* SlidingFormPage.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		ED660C531DA94DF400411874 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ED660C541DA94DF400411874 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		ED660C581DA94DF400411874 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ED660C591DA94DF400411874 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ED660C5C1DA94DF400411874 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ED660C5D1DA94DF400411874 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ED660C5F1DA94DF400411874 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = SLMFH6GDG4;
+				INFOPLIST_FILE = SlidingForm/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = me.chengkang.SlidingForm;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		ED660C601DA94DF400411874 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = SLMFH6GDG4;
+				INFOPLIST_FILE = SlidingForm/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = me.chengkang.SlidingForm;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ED660C471DA94DF400411874 /* Build configuration list for PBXProject "SlidingForm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED660C5C1DA94DF400411874 /* Debug */,
+				ED660C5D1DA94DF400411874 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ED660C5E1DA94DF400411874 /* Build configuration list for PBXNativeTarget "SlidingForm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED660C5F1DA94DF400411874 /* Debug */,
+				ED660C601DA94DF400411874 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ED660C441DA94DF400411874 /* Project object */;
+}
