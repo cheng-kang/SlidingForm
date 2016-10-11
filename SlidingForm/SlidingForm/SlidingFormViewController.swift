@@ -9,21 +9,26 @@
 import UIKit
 
 class SlidingFormViewController: UIViewController {
-    
-    class func vc(withStoryboardName name: String, bundle: Bundle?, identifier: String, andFormTitle title: String, contents: [Any], currentPageIndex: Int = 0, customFontName: String = "") -> SlidingFormViewController {
-        let sb = UIStoryboard.init(name: name, bundle: bundle)
-        let vc = sb.instantiateViewController(withIdentifier: identifier) as! SlidingFormViewController
+    class func vc(withFormTitle title: String, pages: [SlidingFormPage], currentPageIndex: Int = 0, finishCallback: ((_ results: [Any])->())?) -> SlidingFormViewController {
+        let sb = UIStoryboard.init(name: "SlidingForm", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "SlidingFormViewController") as! SlidingFormViewController
+        
+        vc.finishCallback = finishCallback
         
         vc.formTitile = title
-        vc.contents = contents
+        vc.pages = pages
         vc.currentPageIndex = currentPageIndex
         
-        SlidingFormPageConfig.sharedInstance.customFontName = customFontName
-
         return vc
     }
     
     let config = SlidingFormPageConfig.sharedInstance
+    
+    // finishCallback: this callback is invoked when the user clicks finishBtn
+    //                 (the nextBtn becomes finishBtn when it's the last page)
+    // results:  contains result of each page in the order of the pages
+    // note that elements in the result may have different data type according to related page type
+    var finishCallback: ((_ results: [Any])->())?
     
     let cancelBtn = UIButton()
     let titleLbl = UILabel()
@@ -32,7 +37,7 @@ class SlidingFormViewController: UIViewController {
     let nextBtn = UIButton()
     let pageLbl = UILabel()
     
-    var pages = [UIView]()
+    var pages = [SlidingFormPage]()
     
     var margin: CGFloat = 20
     var titleLblY: CGFloat = 60
@@ -45,11 +50,6 @@ class SlidingFormViewController: UIViewController {
     var scrollviewToTop: CGFloat = 8
     var scrollviewToBottom: CGFloat = 8
     
-    var prevBtnTitle = "上一页"
-    var prevBtnTitleS = "第一页"
-    var nextBtnTitle = "下一页"
-    var nextBtnTitleS = "完成"
-    
     var prevBtnToLeft: CGFloat = 20
     var prevBtnToScrollview: CGFloat = 25
     
@@ -58,37 +58,34 @@ class SlidingFormViewController: UIViewController {
     var pageLblToLeft: CGFloat = 20
     var pageLblToBottom: CGFloat = 30
     
-    var lightColor: UIColor = UIColor(red: 252/255, green: 252/255, blue: 252/255, alpha: 1)
-    var lightColorHighlighted: UIColor = UIColor(red: 252/255, green: 252/255, blue: 252/255, alpha: 0.7)
-    var greyColor: UIColor = UIColor(red: 240/255, green: 239/255, blue: 241/255, alpha: 1)
-    var bgColor: UIColor = UIColor(red: 93/255, green: 87/255, blue: 107/255, alpha: 1)
-    var warningColor: UIColor = UIColor(red: 1, green: 1, blue: 0, alpha: 1)
-    
     var formTitile = "" {
         didSet {
             self.titleLbl.text = formTitile
         }
     }
-    var contents = [Any]()
-    
-    var anwsers = [String]()
     
     var currentPageIndex = 0 {
         didSet {
-            self.pageLbl.text = "\(currentPageIndex+1)/\(contents.count)"
+            self.pageLbl.text = "\(currentPageIndex+1)/\(pages.count)"
             
             if isLastPage {
-                self.nextBtn.setTitle(nextBtnTitleS, for: .normal)
+                self.nextBtn.setTitle(config.nextBtnTitleS, for: .normal)
             } else {
-                self.nextBtn.setTitle(nextBtnTitle, for: .normal)
+                self.nextBtn.setTitle(config.nextBtnTitle, for: .normal)
             }
             
             if isFirstPage {
-                self.prevBtn.setTitle(prevBtnTitleS, for: .normal)
+                self.prevBtn.setTitle(config.prevBtnTitleS, for: .normal)
                 self.prevBtn.isEnabled = false
             } else {
-                self.prevBtn.setTitle(prevBtnTitle, for: .normal)
+                self.prevBtn.setTitle(config.prevBtnTitle, for: .normal)
                 self.prevBtn.isEnabled = true
+            }
+            
+            if isCurrentPageFinished {
+                self.nextBtn.isEnabled = true
+            } else {
+                self.nextBtn.isEnabled = false
             }
             
             UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: {
@@ -98,10 +95,13 @@ class SlidingFormViewController: UIViewController {
     }
     
     var isLastPage: Bool {
-        return currentPageIndex == contents.count - 1
+        return currentPageIndex == pages.count - 1
     }
     var isFirstPage: Bool {
         return currentPageIndex == 0
+    }
+    var isCurrentPageFinished: Bool {
+        return self.pages[currentPageIndex].isFinished
     }
     
     override func viewDidLoad() {
@@ -110,6 +110,22 @@ class SlidingFormViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.automaticallyAdjustsScrollViewInsets = false
         self.initUI()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(SlidingFormViewController.handleCurrentPageFinished), name: NSNotification.Name(rawValue: "CurrentPageFinished"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SlidingFormViewController.handleCurrentPageUnfinished), name: NSNotification.Name(rawValue: "CurrentPageUnFinished"), object: nil)
+    }
+    
+    func handleCurrentPageFinished() {
+        self.nextBtn.isEnabled = true
+    }
+    
+    func handleCurrentPageUnfinished() {
+        self.nextBtn.isEnabled = false
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "CurrentPageFinished"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "CurrentPageUnFinished"), object: nil)
     }
     
     var isFirstDidLayoutSubviews = true
@@ -117,181 +133,18 @@ class SlidingFormViewController: UIViewController {
         if isFirstDidLayoutSubviews {
             isFirstDidLayoutSubviews = false
             
-            
             let boxWidth = self.scrollview.frame.width
             let boxHeight = self.scrollview.frame.height
             
             // init scroll view content
-            for i in 0..<self.contents.count {
-                let content = self.contents[i] as! [Any]
-                let sectionTitle = content[0] as! String
-                let sectionDesc = content[1] as? String
-                let isRequired = content[2] as! Bool
-                let page = SlidingFormPage.getInput(withFrame: CGRect(x: boxWidth*CGFloat(i), y: 0, width: boxWidth, height: boxHeight), andSetTitle: sectionTitle, isRequired: isRequired, desc: (sectionDesc == "" ? nil : sectionDesc))
-                self.scrollview.addSubview(page)
-                print(page.frame)
+            for i in 0..<self.pages.count {
+                pages[i].frame = CGRect(x: boxWidth*CGFloat(i), y: 0, width: boxWidth, height: boxHeight)
+                self.scrollview.addSubview(pages[i])
             }
             
-            self.scrollview.contentSize = CGSize(width: boxWidth*CGFloat(self.contents.count), height: boxHeight)
+            self.scrollview.contentSize = CGSize(width: boxWidth*CGFloat(self.pages.count), height: boxHeight)
         }
-//        let boxWidth = self.scrollview.frame.width
-//        let boxHeight = self.scrollview.frame.height
-//        
-//        // init scroll view content
-//        for i in 0..<self.contents.count {
-//            let content = self.contents[i] as! [Any]
-//            let sectionTitle = content[0] as! String
-//            let sectionDesc = content[1] as? String
-//            let isRequired = content[2] as! Bool
-//
-//            let boxView = UIView()
-//            let sectionTitleLbl = UILabel()
-//            let sectionTitleAdditionLbl = UILabel()
-//            let errorMsgLbl = UILabel()
-//            let textField = UITextField()
-//            let textFiledBottomLineView = UIView()
-//            let sectionDescLbl = UILabel()
-//            let sectionDescTextView = UITextView()
-//            
-//            boxView.frame = CGRect(x: boxWidth*CGFloat(i), y: 0, width: boxWidth, height: boxHeight)
-//            
-//            boxView.addSubview(sectionTitleLbl)
-//            boxView.addSubview(sectionTitleAdditionLbl)
-//            boxView.addSubview(errorMsgLbl)
-//            boxView.addSubview(textField)
-//            boxView.addSubview(textFiledBottomLineView)
-//            boxView.addSubview(sectionDescLbl)
-//            boxView.addSubview(sectionDescTextView)
-//            
-//            sectionTitleLbl.translatesAutoresizingMaskIntoConstraints = false
-//            sectionTitleAdditionLbl.translatesAutoresizingMaskIntoConstraints = false
-//            errorMsgLbl.translatesAutoresizingMaskIntoConstraints = false
-//            textField.translatesAutoresizingMaskIntoConstraints = false
-//            textFiledBottomLineView.translatesAutoresizingMaskIntoConstraints = false
-//            sectionDescLbl.translatesAutoresizingMaskIntoConstraints = false
-//            sectionDescTextView.translatesAutoresizingMaskIntoConstraints = false
-//            
-//            textField.delegate = self
-//            textField.returnKeyType = .done
-//            textField.borderStyle = .none
-//            textField.textColor = lightColor
-//            if let font = UIFont(name: customFontName, size: 20) {
-//                textField.font = font
-//            } else {
-//                textField.font = UIFont(name: "System", size: 20)
-//            }
-//            
-//            textFiledBottomLineView.backgroundColor = lightColor
-//            
-//            sectionTitleLbl.textColor = lightColor
-//            if let font = UIFont(name: customFontName, size: 22) {
-//                sectionTitleLbl.font = font
-//            } else {
-//                sectionTitleLbl.font = UIFont(name: "System", size: 22)
-//            }
-//            
-//            sectionTitleAdditionLbl.textColor = lightColor
-//            if let font = UIFont(name: customFontName, size: 10) {
-//                sectionTitleAdditionLbl.font = font
-//            } else {
-//                sectionTitleAdditionLbl.font = UIFont(name: "System", size: 10)
-//            }
-//            
-//            errorMsgLbl.textColor = warningColor
-//            if let font = UIFont(name: customFontName, size: 10) {
-//                errorMsgLbl.font = font
-//            } else {
-//                errorMsgLbl.font = UIFont(name: "System", size: 10)
-//            }
-//            
-//            sectionDescLbl.textColor = greyColor
-//            if let font = UIFont(name: customFontName, size: 12) {
-//                sectionDescLbl.font = font
-//            } else {
-//                sectionDescLbl.font = UIFont(name: "System", size: 12)
-//            }
-//            
-//            sectionDescTextView.isEditable = false
-//            sectionDescTextView.isSelectable = false
-//            sectionDescTextView.backgroundColor = UIColor.clear
-//            sectionDescTextView.textColor = greyColor
-//            if let font = UIFont(name: customFontName, size: 10) {
-//                sectionDescTextView.font = font
-//            } else {
-//                sectionDescTextView.font = UIFont(name: "System", size: 10)
-//            }
-//            sectionDescTextView.showsVerticalScrollIndicator = false
-//            sectionDescTextView.showsHorizontalScrollIndicator = false
-//            
-//            
-//            let textFieldCenterYConstraint = NSLayoutConstraint(item: textField, attribute: .centerY, relatedBy: .equal, toItem: boxView, attribute: .centerY, multiplier: 1, constant: 0)
-//            let textFieldLeadingConstraint = NSLayoutConstraint(item: textField, attribute: .leading, relatedBy: .equal, toItem: boxView, attribute: .leading, multiplier: 1, constant: 20)
-//            let textFieldTrailingConstraint = NSLayoutConstraint(item: textField, attribute: .trailing, relatedBy: .equal, toItem: boxView, attribute: .trailing, multiplier: 1, constant: -20)
-//            let textFiledHeightConstraint = NSLayoutConstraint(item: textField, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 38)
-//            
-//            let textFieldBottomLineLeadingConstraint = NSLayoutConstraint(item: textFiledBottomLineView, attribute: .leading, relatedBy: .equal, toItem: boxView, attribute: .leading, multiplier: 1, constant: 20)
-//            let textFieldBottomLineTrailingConstraint = NSLayoutConstraint(item: textFiledBottomLineView, attribute: .trailing, relatedBy: .equal, toItem: boxView, attribute: .trailing, multiplier: 1, constant: -20)
-//            let textFieldBottomLineBottomConstraint = NSLayoutConstraint(item: textFiledBottomLineView, attribute: .bottom, relatedBy: .equal, toItem: textField, attribute: .bottom, multiplier: 1, constant: 0)
-//            let textFieldBottomLineHeightConstraint = NSLayoutConstraint(item: textFiledBottomLineView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2)
-//            
-//            let errorMsgBottomConstraint = NSLayoutConstraint(item: errorMsgLbl, attribute: .bottom, relatedBy: .equal, toItem: textField, attribute: .top, multiplier: 1, constant: -8)
-//            let errorMsgLeadingConstraint = NSLayoutConstraint(item: errorMsgLbl, attribute: .leading, relatedBy: .equal, toItem: boxView, attribute: .leading, multiplier: 1, constant: 20)
-//            
-//            let sectionTitleBottomConstraint = NSLayoutConstraint(item: sectionTitleLbl, attribute: .bottom, relatedBy: .equal, toItem: errorMsgLbl, attribute: .top, multiplier: 1, constant: 8)
-//            let sectionTitleBottomConstraint2 = NSLayoutConstraint(item: sectionTitleLbl, attribute: .bottom, relatedBy: .equal, toItem: textField, attribute: .top, multiplier: 1, constant: 20)
-//            let sectionTitleLeadingConstraint = NSLayoutConstraint(item: sectionTitleLbl, attribute: .leading, relatedBy: .equal, toItem: boxView, attribute: .leading, multiplier: 1, constant: 20)
-//            
-//            let sectionTitleAdditionBottomConstraint = NSLayoutConstraint(item: sectionTitleAdditionLbl, attribute: .bottom, relatedBy: .equal, toItem: sectionTitleLbl, attribute: .bottom, multiplier: 1, constant: 0)
-//            let sectionTitleAdditionLeadingConstraint = NSLayoutConstraint(item: sectionTitleAdditionLbl, attribute: .leading, relatedBy: .equal, toItem: sectionTitleLbl, attribute: .trailing, multiplier: 1, constant: 8)
-//            
-//            let sectionDescLblTopConstraint = NSLayoutConstraint(item: sectionDescLbl, attribute: .top, relatedBy: .equal, toItem: textField, attribute: .bottom, multiplier: 1, constant: 8)
-//            let sectionDescLblLeadingConstraint = NSLayoutConstraint(item: sectionDescLbl, attribute: .leading, relatedBy: .equal, toItem: boxView, attribute: .leading, multiplier: 1, constant: 20)
-//            
-//            let sectionDescTextTopConstraint = NSLayoutConstraint(item: sectionDescTextView, attribute: .top, relatedBy: .equal, toItem: sectionDescLbl, attribute: .bottom, multiplier: 1, constant: 0)
-//            let sectionDescTextLeadingConstraint = NSLayoutConstraint(item: sectionDescTextView, attribute: .leading, relatedBy: .equal, toItem: boxView, attribute: .leading, multiplier: 1, constant: 20)
-//            let sectionDescTextTrailingConstraint = NSLayoutConstraint(item: sectionDescTextView, attribute: .trailing, relatedBy: .equal, toItem: boxView, attribute: .trailing, multiplier: 1, constant: -20)
-//            let sectionDescTextBottomConstraint = NSLayoutConstraint(item: sectionDescTextView, attribute: .bottom, relatedBy: .equal, toItem: boxView, attribute: .bottom, multiplier: 1, constant: 0)
-//            
-//            boxView.addConstraints([textFieldCenterYConstraint, textFieldLeadingConstraint, textFieldTrailingConstraint, textFiledHeightConstraint, textFieldBottomLineBottomConstraint, textFieldBottomLineHeightConstraint, textFieldBottomLineLeadingConstraint, textFieldBottomLineTrailingConstraint, errorMsgBottomConstraint, errorMsgLeadingConstraint, sectionTitleBottomConstraint, sectionTitleBottomConstraint2, sectionTitleLeadingConstraint, sectionTitleAdditionBottomConstraint, sectionTitleAdditionLeadingConstraint, sectionDescLblTopConstraint, sectionDescLblLeadingConstraint, sectionDescTextTopConstraint, sectionDescTextBottomConstraint, sectionDescTextLeadingConstraint, sectionDescTextTrailingConstraint])
-//            
-//            sectionTitleLbl.text = sectionTitle
-//            sectionTitleAdditionLbl.text = "*必填"
-//            errorMsgLbl.text = "!Error"
-//            errorMsgLbl.alpha = 1
-//            sectionDescLbl.text = "说明："
-//            sectionDescTextView.text = sectionDesc
-//            sectionTitleAdditionLbl.alpha = isRequired ? 1 : 0
-//            
-//            self.scrollview.addSubview(boxView)
-//            self.pages.append(boxView)
-            
-            
-//            let page = SlidingFormPage.getInput(withFrame: CGRect(x: boxWidth*CGFloat(i), y: 0, width: boxWidth, height: boxHeight), andSetname: sectionTitle, isRequired: isRequired, desc: (sectionDesc == "" ? nil : sectionDesc))
-//            let page = SlidingFormPage(inputWithFrame: CGRect(x: boxWidth*CGFloat(i), y: 0, width: boxWidth, height: boxHeight), andSetname: sectionTitle, isRequired: isRequired, desc: (sectionDesc == "" ? nil : sectionDesc))
-//            self.scrollview.addSubview(page)
-//        }
-//        
-//        self.scrollview.contentSize = CGSize(width: boxWidth*CGFloat(self.contents.count), height: boxHeight)
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        
-//        let boxWidth = self.scrollview.frame.width
-//        let boxHeight = self.scrollview.frame.height
-//        
-//        // init scroll view content
-//        for i in 0..<self.contents.count {
-//            let content = self.contents[i] as! [Any]
-//            let sectionTitle = content[0] as! String
-//            let sectionDesc = content[1] as? String
-//            let isRequired = content[2] as! Bool
-//            let page = SlidingFormPage.getInput(withFrame: CGRect(x: boxWidth*CGFloat(i), y: 0, width: boxWidth, height: boxHeight), andSetname: sectionTitle, isRequired: isRequired, desc: (sectionDesc == "" ? nil : sectionDesc))
-//            self.scrollview.addSubview(page)
-//            print(page.frame)
-//        }
-//        
-//        self.scrollview.contentSize = CGSize(width: boxWidth*CGFloat(self.contents.count), height: boxHeight)
-//    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -300,7 +153,7 @@ class SlidingFormViewController: UIViewController {
     func initUI() {
         self.view.isUserInteractionEnabled = true
         self.prevBtn.isUserInteractionEnabled = true
-        self.view.backgroundColor = bgColor
+        self.view.backgroundColor = config.bgColor
         
         self.view.addSubview(cancelBtn)
         self.view.addSubview(titleLbl)
@@ -324,7 +177,7 @@ class SlidingFormViewController: UIViewController {
         
         // init titleLbl
         self.titleLbl.textAlignment = .left
-        self.titleLbl.textColor = lightColor
+        self.titleLbl.textColor = config.textColor
         
         if let font = UIFont(name: config.customFontName, size: config.nameLblSize) {
             self.titleLbl.font = font
@@ -339,9 +192,9 @@ class SlidingFormViewController: UIViewController {
         
         
         // init page btns
-        self.prevBtn.tintColor = lightColor
-        self.prevBtn.setTitleColor(lightColorHighlighted, for: .highlighted)
-        self.prevBtn.setTitleColor(lightColorHighlighted, for: .disabled)
+        self.prevBtn.tintColor = config.textColor
+        self.prevBtn.setTitleColor(config.textColorHighlighted, for: .highlighted)
+        self.prevBtn.setTitleColor(config.textColorHighlighted, for: .disabled)
         
         if let font = UIFont(name: config.customFontName, size: config.pageBtnSize) {
             self.prevBtn.titleLabel?.font = font
@@ -349,9 +202,9 @@ class SlidingFormViewController: UIViewController {
             self.prevBtn.titleLabel?.font = UIFont(name: "System", size: config.pageBtnSize)
         }
         
-        self.nextBtn.tintColor = lightColor
-        self.nextBtn.setTitleColor(lightColorHighlighted, for: .highlighted)
-        self.nextBtn.setTitleColor(lightColorHighlighted, for: .disabled)
+        self.nextBtn.tintColor = config.textColor
+        self.nextBtn.setTitleColor(config.textColorHighlighted, for: .highlighted)
+        self.nextBtn.setTitleColor(config.textColorHighlighted, for: .disabled)
         
         if let font = UIFont(name: config.customFontName, size: config.pageBtnSize) {
             self.nextBtn.titleLabel?.font = font
@@ -365,7 +218,7 @@ class SlidingFormViewController: UIViewController {
         
         // init pageLbl
         self.pageLbl.textAlignment = .left
-        self.pageLbl.textColor = lightColor
+        self.pageLbl.textColor = config.textColor
         
         if let font = UIFont(name: config.customFontName, size: config.pageLblSize) {
             self.pageLbl.font = font
@@ -413,7 +266,42 @@ class SlidingFormViewController: UIViewController {
         if !isLastPage {
             self.currentPageIndex += 1
         } else {
+            var results = [Any]()
             
+            for page in pages {
+                if page.type == .input {
+                    // return the text, e.g. "Some Input"
+                    results.append(page.inputValue ?? "")
+                } else if page.type == .select {
+                    // return the list of selected option index and value, e.g. [1, "male"]
+                    results.append([page.selectedOptionIndex ?? 0, page.selectOptions?[page.selectedOptionIndex!]])
+                } else if page.type == .checkbox {
+                    // return a list of checkbox selection list and checkbox options list,
+                    // e.g. [[false, true, false, false], ["chrome", "firefox", "opera", "ie"]]
+                    var result = [Bool]()
+                    for i in 0..<page.checkboxList!.count {
+                        result.append(page.checkboxList![i].isChecked)
+                    }
+                    results.append([result, page.checkboxOptions!])
+                } else if page.type == .ratio {
+                    // return the selected ratio option index and value
+                    // e.g. [1, "male"]
+                    results.append([page.selectedRatioIndex, page.ratioOptions?[page.selectedRatioIndex!]])
+                } else if page.type == .switches {
+                    // return a list of switch activation list and switches options list,
+                    // e.g. [[false, true], ["nightmode", "notification"]]
+                    var result = [Bool]()
+                    for i in 0..<page.switchesList!.count {
+                        result.append(page.switchesList![i].isActive)
+                    }
+                    results.append([result, page.switchesOptions!])
+                } else if page.type == .textarea {
+                    // return the text, e.g. "I would rate this app 5 stars"
+                    results.append(page.textareaValue ?? "")
+                }
+            }
+            self.finishCallback?(results)
+            self.dismiss(animated: true, completion: nil)
         }
     }
     

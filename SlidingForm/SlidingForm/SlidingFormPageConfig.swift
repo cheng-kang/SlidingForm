@@ -17,10 +17,10 @@ class SlidingFormPageConfig: NSObject {
     var pageBtnSize: CGFloat = 20
     var pageLblSize: CGFloat = 17
     
-    var prevBtnTitle = "上一页"
-    var prevBtnTitleS = "第一页"
-    var nextBtnTitle = "下一页"
-    var nextBtnTitleS = "完成"
+    var prevBtnTitle = NSLocalizedString("Prev", comment: "SlidingForm")
+    var prevBtnTitleS = NSLocalizedString("First", comment: "SlidingForm")
+    var nextBtnTitle = NSLocalizedString("Next", comment: "SlidingForm")
+    var nextBtnTitleS = NSLocalizedString("Done", comment: "SlidingForm")
     
     // MARK: Page Config
     var titleLblSize: CGFloat = 22
@@ -30,6 +30,10 @@ class SlidingFormPageConfig: NSObject {
     var descTextViewSize: CGFloat = 10
     
     var inputTextSize: CGFloat = 20
+    var selectTitleSize: CGFloat = 20
+    
+    var selectRowHeight: CGFloat = 20
+    var showedSelectRowNumber: CGFloat = 5
     
     // color
     var textColor: UIColor = UIColor(red: 252/255, green: 252/255, blue: 252/255, alpha: 1)
@@ -41,6 +45,6 @@ class SlidingFormPageConfig: NSObject {
     //
     var customFontName = ""
     
-    var requiredLblText = "*必填"
-    var descLblText = "说明："
+    var requiredLblText = NSLocalizedString("*required", comment: "SlidingForm")
+    var descLblText = NSLocalizedString("Description:", comment: "SlidingForm")
 }

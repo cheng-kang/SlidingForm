@@ -17,5 +17,6 @@ class SlidingFormElementRatio: UIView {
         // Drawing code
     }
     */
-
+    
+    var isSelected: Bool = false
 }

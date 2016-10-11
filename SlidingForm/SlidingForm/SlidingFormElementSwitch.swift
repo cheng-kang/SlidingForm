@@ -17,5 +17,6 @@ class SlidingFormElementSwitch: UIView {
         // Drawing code
     }
     */
-
+    
+    var isActive: Bool = false
 }

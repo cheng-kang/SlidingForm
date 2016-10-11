@@ -17,5 +17,7 @@ class SlidingFormElementCheckbox: UIView {
         // Drawing code
     }
     */
+    
+    var isChecked: Bool = false
 
 }

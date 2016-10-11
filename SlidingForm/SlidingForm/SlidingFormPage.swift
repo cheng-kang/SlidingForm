@@ -29,10 +29,27 @@ class SlidingFormPage: UIView {
     
     let conf = SlidingFormPageConfig.sharedInstance
     
+    var isFinished: Bool {
+        if self.type == .input {
+            if self.isRequired != nil {
+                if inputRule != nil {
+                    return NSPredicate(format: "SELF MATCHES %@", self.inputRule!).evaluate(with: self.inputValue)
+                } else {
+                    return self.inputValue != nil && self.inputValue != ""
+                }
+            }
+        } else if self.type == .select {
+            // nothing
+        } else {
+        }
+        
+        return true
+    }
+    
     var type: SlidingFormPageType!
     var title: String!
     var desc: String?
-    var isRequired: Bool!
+    var isRequired: Bool?
     var errorMsg: String?
     
     let titleLbl = UILabel()
@@ -44,19 +61,28 @@ class SlidingFormPage: UIView {
     // for input
     var inputValue: String?
     var inputFormat: String?
+    var inputRule: String? // regular expression
     
     // for select
     var selectOptions: [String]?
     var selectedOptionIndex: Int?
     
     // for switches
-    var switchesOptions: [SlidingFormElementSwitch]?
+    var switchesOptions: [String]?
+    var switchesList: [SlidingFormElementSwitch]?
+    var switchesMax: Int?
+    var switchesMin: Int?
     
     // for checkbox
+    var checkboxOptions: [String]?
     var checkboxList: [SlidingFormElementCheckbox]?
+    var checkboxMax: Int?
+    var checkboxMin: Int?
     
     // for ratio
+    var ratioOptions: [String]?
     var ratioList: [SlidingFormElementRatio]?
+    var selectedRatioIndex: Int?
     
     // for textarea
     var textareaValue: String?
@@ -152,7 +178,6 @@ class SlidingFormPage: UIView {
         self.addConstraint(descLblLeadingConstraint)
         
         self.titleLbl.text = title
-        self.requiredLbl.text = self.conf.requiredLblText
         
         if self.desc != nil {
             self.descLbl.text = self.conf.descLblText
@@ -161,19 +186,25 @@ class SlidingFormPage: UIView {
             // !!! descTextView has a bug: cannot scroll to bottom
         }
         
-        self.requiredLbl.alpha = self.isRequired == true ? 1 : 0
+        if self.isRequired != nil {
+            self.requiredLbl.text = self.conf.requiredLblText
+            self.requiredLbl.alpha = self.isRequired == true ? 1 : 0
+        }
     }
     
-    class func getInput(withFrame frame: CGRect, andSetTitle title: String, isRequired: Bool, desc: String?) -> SlidingFormPage {
+    class func getInput(withTitle title: String, isRequired: Bool, desc: String?, defaultValue: String? = nil, inputRule: String? = nil, errorMsg: String? = nil) -> SlidingFormPage {
         let page = SlidingFormPage()
         
         page.type = .input
-        page.frame = frame
         page.title = title
         page.isRequired = isRequired
         page.desc = desc
+        page.inputValue = defaultValue
+        page.inputRule = inputRule
+        page.errorMsg = errorMsg
         
         page.initCommon()
+        
         
         let textField = UITextField()
         let textFiledBottomLineView = UIView()
@@ -182,7 +213,9 @@ class SlidingFormPage: UIView {
         page.addSubview(textField)
         page.addSubview(textFiledBottomLineView)
         
-        // config textfield
+        textField.addTarget(page, action: #selector(page.handleTextFieldChange(sender:)), for: .editingChanged)
+        
+        
         textField.delegate = page
         textField.returnKeyType = .done
         textField.borderStyle = .none
@@ -195,9 +228,7 @@ class SlidingFormPage: UIView {
         
         textFiledBottomLineView.backgroundColor = page.conf.textColor
         
-        // set constraints
         
-        // case only
         let textFieldCenterYConstraint = NSLayoutConstraint(item: textField, attribute: .centerY, relatedBy: .equal, toItem: page, attribute: .centerY, multiplier: 1, constant: 0)
         let textFieldLeadingConstraint = NSLayoutConstraint(item: textField, attribute: .leading, relatedBy: .equal, toItem: page, attribute: .leading, multiplier: 1, constant: 20)
         let textFieldTrailingConstraint = NSLayoutConstraint(item: textField, attribute: .trailing, relatedBy: .equal, toItem: page, attribute: .trailing, multiplier: 1, constant: -20)
@@ -216,11 +247,46 @@ class SlidingFormPage: UIView {
         page.addConstraint(textFieldBottomLineTrailingConstraint)
         page.addConstraint(textFieldBottomLineHeightConstraint)
         
+        if defaultValue != nil {
+            textField.text = defaultValue!
+        }
+        
         return page
     }
     
-    class func getSelect() {
+    class func getSelect(withTitle title: String, desc: String?, selectOptions: [String], selectedOptionIndex: Int = 0) -> SlidingFormPage {
+        let page = SlidingFormPage()
         
+        page.type = .select
+        page.title = title
+        page.desc = desc
+        page.selectOptions = selectOptions
+        page.selectedOptionIndex = selectedOptionIndex
+        
+        page.initCommon()
+        
+        
+        let selectView = UIPickerView()
+        selectView.translatesAutoresizingMaskIntoConstraints = false
+        selectView.delegate = page
+        selectView.dataSource = page
+        page.addSubview(selectView)
+        
+        selectView.backgroundColor = UIColor.clear
+        
+        let selectViewHeightConstraint = NSLayoutConstraint(item: selectView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: page.conf.selectRowHeight * page.conf.showedSelectRowNumber)
+        let selectViewLeadingConstraint = NSLayoutConstraint(item: selectView, attribute: .leading, relatedBy: .equal, toItem: page, attribute: .leading, multiplier: 1, constant: 20)
+        let selectViewTrailingConstraint = NSLayoutConstraint(item: selectView, attribute: .trailing, relatedBy: .equal, toItem: page, attribute: .trailing, multiplier: 1, constant: -20)
+        let selectViewCenterYConstraint = NSLayoutConstraint(item: selectView, attribute: .centerY, relatedBy: .equal, toItem: page, attribute: .centerY, multiplier: 1, constant: 0)
+        page.addConstraint(selectViewHeightConstraint)
+        page.addConstraint(selectViewLeadingConstraint)
+        page.addConstraint(selectViewTrailingConstraint)
+        page.addConstraint(selectViewCenterYConstraint)
+        
+        
+        selectView.selectRow(selectedOptionIndex, inComponent: 0, animated: true)
+        
+        return page
     }
     
     class func getSwitches() {
@@ -239,6 +305,18 @@ class SlidingFormPage: UIView {
         
     }
     
+    func handleTextFieldChange(sender: UITextField) {
+        self.inputValue = sender.text
+        
+        if self.isFinished {
+            self.errorMsgLbl.text = ""
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CurrentPageFinished"), object: nil)
+        } else {
+            self.errorMsgLbl.text = self.errorMsg
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CurrentPageUnFinished"), object: nil)
+        }
+    }
+    
 }
 
 extension SlidingFormPage: UITextFieldDelegate {
@@ -246,5 +324,39 @@ extension SlidingFormPage: UITextFieldDelegate {
         textField.resignFirstResponder()
         
         return true
+    }
+}
+
+extension SlidingFormPage: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.selectOptions!.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.selectedOptionIndex = row
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
+    {
+        let pickerLabel = UILabel()
+        pickerLabel.textColor = self.conf.textColor
+        pickerLabel.text = self.selectOptions![row]
+        if let font = UIFont(name: self.conf.customFontName, size: self.conf.selectTitleSize) {
+            pickerLabel.font = font
+        } else {
+            pickerLabel.font = UIFont(name: "System", size: self.conf.selectTitleSize)
+        }
+        
+        pickerLabel.textAlignment = .center
+        
+        return pickerLabel
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return self.conf.selectRowHeight
     }
 }

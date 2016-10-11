@@ -12,13 +12,13 @@
 		ED660C551DA94DF400411874 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED660C531DA94DF400411874 /* Main.storyboard */; };
 		ED660C571DA94DF400411874 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED660C561DA94DF400411874 /* Assets.xcassets */; };
 		ED660C5A1DA94DF400411874 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED660C581DA94DF400411874 /* LaunchScreen.storyboard */; };
-		ED660C671DA94E1300411874 /* SlidingFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C611DA94E1300411874 /* SlidingFormViewController.swift */; };
-		ED660C681DA94E1300411874 /* SlidingFormPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C621DA94E1300411874 /* SlidingFormPage.swift */; };
-		ED660C691DA94E1300411874 /* SlidingFormElementCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C631DA94E1300411874 /* SlidingFormElementCheckbox.swift */; };
-		ED660C6A1DA94E1300411874 /* SlidingFormElementRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C641DA94E1300411874 /* SlidingFormElementRatio.swift */; };
-		ED660C6B1DA94E1300411874 /* SlidingFormPageConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C651DA94E1300411874 /* SlidingFormPageConfig.swift */; };
-		ED660C6C1DA94E1300411874 /* SlidingFormElementSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED660C661DA94E1300411874 /* SlidingFormElementSwitch.swift */; };
 		ED660C711DA9506C00411874 /* SlidingForm.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED660C701DA9506C00411874 /* SlidingForm.storyboard */; };
+		EDC5212D1DAD7E41007039FC /* SlidingFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC5212C1DAD7E41007039FC /* SlidingFormViewController.swift */; };
+		EDC521331DAD7E52007039FC /* SlidingFormPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC5212E1DAD7E52007039FC /* SlidingFormPage.swift */; };
+		EDC521341DAD7E52007039FC /* SlidingFormElementCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC5212F1DAD7E52007039FC /* SlidingFormElementCheckbox.swift */; };
+		EDC521351DAD7E52007039FC /* SlidingFormElementRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC521301DAD7E52007039FC /* SlidingFormElementRatio.swift */; };
+		EDC521361DAD7E52007039FC /* SlidingFormPageConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC521311DAD7E52007039FC /* SlidingFormPageConfig.swift */; };
+		EDC521371DAD7E52007039FC /* SlidingFormElementSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC521321DAD7E52007039FC /* SlidingFormElementSwitch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,13 +29,13 @@
 		ED660C561DA94DF400411874 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ED660C591DA94DF400411874 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED660C5B1DA94DF400411874 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		ED660C611DA94E1300411874 /* SlidingFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormViewController.swift; sourceTree = "<group>"; };
-		ED660C621DA94E1300411874 /* SlidingFormPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormPage.swift; sourceTree = "<group>"; };
-		ED660C631DA94E1300411874 /* SlidingFormElementCheckbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormElementCheckbox.swift; sourceTree = "<group>"; };
-		ED660C641DA94E1300411874 /* SlidingFormElementRatio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormElementRatio.swift; sourceTree = "<group>"; };
-		ED660C651DA94E1300411874 /* SlidingFormPageConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormPageConfig.swift; sourceTree = "<group>"; };
-		ED660C661DA94E1300411874 /* SlidingFormElementSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormElementSwitch.swift; sourceTree = "<group>"; };
 		ED660C701DA9506C00411874 /* SlidingForm.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SlidingForm.storyboard; sourceTree = "<group>"; };
+		EDC5212C1DAD7E41007039FC /* SlidingFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormViewController.swift; sourceTree = "<group>"; };
+		EDC5212E1DAD7E52007039FC /* SlidingFormPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormPage.swift; sourceTree = "<group>"; };
+		EDC5212F1DAD7E52007039FC /* SlidingFormElementCheckbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormElementCheckbox.swift; sourceTree = "<group>"; };
+		EDC521301DAD7E52007039FC /* SlidingFormElementRatio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormElementRatio.swift; sourceTree = "<group>"; };
+		EDC521311DAD7E52007039FC /* SlidingFormPageConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormPageConfig.swift; sourceTree = "<group>"; };
+		EDC521321DAD7E52007039FC /* SlidingFormElementSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormElementSwitch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,12 +82,12 @@
 		ED660C6D1DA94E2200411874 /* SlidingFormLib */ = {
 			isa = PBXGroup;
 			children = (
-				ED660C611DA94E1300411874 /* SlidingFormViewController.swift */,
-				ED660C621DA94E1300411874 /* SlidingFormPage.swift */,
-				ED660C631DA94E1300411874 /* SlidingFormElementCheckbox.swift */,
-				ED660C641DA94E1300411874 /* SlidingFormElementRatio.swift */,
-				ED660C651DA94E1300411874 /* SlidingFormPageConfig.swift */,
-				ED660C661DA94E1300411874 /* SlidingFormElementSwitch.swift */,
+				EDC5212C1DAD7E41007039FC /* SlidingFormViewController.swift */,
+				EDC5212E1DAD7E52007039FC /* SlidingFormPage.swift */,
+				EDC5212F1DAD7E52007039FC /* SlidingFormElementCheckbox.swift */,
+				EDC521301DAD7E52007039FC /* SlidingFormElementRatio.swift */,
+				EDC521311DAD7E52007039FC /* SlidingFormPageConfig.swift */,
+				EDC521321DAD7E52007039FC /* SlidingFormElementSwitch.swift */,
 				ED660C701DA9506C00411874 /* SlidingForm.storyboard */,
 			);
 			name = SlidingFormLib;
@@ -168,13 +168,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED660C521DA94DF400411874 /* ViewController.swift in Sources */,
-				ED660C691DA94E1300411874 /* SlidingFormElementCheckbox.swift in Sources */,
-				ED660C671DA94E1300411874 /* SlidingFormViewController.swift in Sources */,
-				ED660C6C1DA94E1300411874 /* SlidingFormElementSwitch.swift in Sources */,
-				ED660C6A1DA94E1300411874 /* SlidingFormElementRatio.swift in Sources */,
+				EDC521341DAD7E52007039FC /* SlidingFormElementCheckbox.swift in Sources */,
+				EDC5212D1DAD7E41007039FC /* SlidingFormViewController.swift in Sources */,
+				EDC521371DAD7E52007039FC /* SlidingFormElementSwitch.swift in Sources */,
+				EDC521351DAD7E52007039FC /* SlidingFormElementRatio.swift in Sources */,
 				ED660C501DA94DF400411874 /* AppDelegate.swift in Sources */,
-				ED660C6B1DA94E1300411874 /* SlidingFormPageConfig.swift in Sources */,
-				ED660C681DA94E1300411874 /* SlidingFormPage.swift in Sources */,
+				EDC521361DAD7E52007039FC /* SlidingFormPageConfig.swift in Sources */,
+				EDC521331DAD7E52007039FC /* SlidingFormPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +338,7 @@
 				ED660C601DA94DF400411874 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
