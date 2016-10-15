@@ -32,6 +32,7 @@ class SlidingFormPageConfig: NSObject {
     var inputTextSize: CGFloat = 20
     var selectTitleSize: CGFloat = 20
     var switchTitleSize: CGFloat = 18
+    var textareaTextSize: CGFloat = 16
     
     var selectRowHeight: CGFloat = 20
     var showedSelectRowNumber: CGFloat = 5

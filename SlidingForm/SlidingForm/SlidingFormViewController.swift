@@ -111,8 +111,15 @@ class SlidingFormViewController: UIViewController {
         self.automaticallyAdjustsScrollViewInsets = false
         self.initUI()
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SlidingFormViewController.handleTap(sender:)))
+        self.view.addGestureRecognizer(tap)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(SlidingFormViewController.handleCurrentPageFinished), name: NSNotification.Name(rawValue: "CurrentPageFinished"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SlidingFormViewController.handleCurrentPageUnfinished), name: NSNotification.Name(rawValue: "CurrentPageUnFinished"), object: nil)
+    }
+    
+    func handleTap(sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
     
     func handleCurrentPageFinished() {
@@ -271,7 +278,7 @@ class SlidingFormViewController: UIViewController {
             for page in pages {
                 if page.type == .input {
                     // return the text, e.g. "Some Input"
-                    results.append(page.inputValue ?? "")
+                    results.append(page.textValue ?? "")
                 } else if page.type == .select {
                     // return the list of selected option index and value, e.g. [1, "male"]
                     results.append([page.selectedOptionIndex, page.options[page.selectedOptionIndex]])
@@ -289,7 +296,7 @@ class SlidingFormViewController: UIViewController {
                     results.append([page.optionsValue, page.options])
                 } else if page.type == .textarea {
                     // return the text, e.g. "I would rate this app 5 stars"
-                    results.append(page.textareaValue ?? "")
+                    results.append(page.textValue ?? "")
                 }
             }
             self.finishCallback?(results)

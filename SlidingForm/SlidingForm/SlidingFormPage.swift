@@ -32,10 +32,10 @@ class SlidingFormPage: UIView {
     var isFinished: Bool {
         if self.type == .input {
             if self.isRequired != nil {
-                if inputRule != nil {
-                    return NSPredicate(format: "SELF MATCHES %@", self.inputRule!).evaluate(with: self.inputValue)
+                if textRule != nil {
+                    return NSPredicate(format: "SELF MATCHES %@", self.textRule!).evaluate(with: self.textValue)
                 } else {
-                    return self.inputValue != nil && self.inputValue != ""
+                    return textValue != nil && textValue != ""
                 }
             }
         } else if self.type == .select {
@@ -58,10 +58,10 @@ class SlidingFormPage: UIView {
     let descLbl = UILabel()
     let descTextView = UITextView()
     
-    // for input
-    var inputValue: String?
-    var inputFormat: String?
-    var inputRule: String? // regular expression
+    // for input, and textarea
+    var textValue: String?
+    var textFormat: String?
+    var textRule: String? // regular expression
     
     // for select, switches, checkbox, and ratio
     var options = [String]()
@@ -73,9 +73,6 @@ class SlidingFormPage: UIView {
     // for switches, checkbox, and ratio
     var tbl: UITableView?
     var cellList: [String:Any]?
-    
-    // for textarea
-    var textareaValue: String?
     
     
     func initCommon() {
@@ -209,15 +206,15 @@ class SlidingFormPage: UIView {
         }
     }
     
-    class func getInput(withTitle title: String, isRequired: Bool, desc: String?, defaultValue: String? = nil, inputRule: String? = nil, errorMsg: String? = nil) -> SlidingFormPage {
+    class func getInput(withTitle title: String, isRequired: Bool, desc: String?, defaultValue: String? = nil, textRule: String? = nil, errorMsg: String? = nil) -> SlidingFormPage {
         let page = SlidingFormPage()
         
         page.type = .input
         page.title = title
         page.isRequired = isRequired
         page.desc = desc
-        page.inputValue = defaultValue
-        page.inputRule = inputRule
+        page.textValue = defaultValue
+        page.textRule = textRule
         page.errorMsg = errorMsg
         
         page.initCommon()
@@ -266,6 +263,66 @@ class SlidingFormPage: UIView {
         
         if defaultValue != nil {
             textField.text = defaultValue!
+        }
+        
+        return page
+    }
+    
+    class func getTextarea(withTitle title: String, isRequired: Bool, desc: String?, defaultValue: String? = nil, textRule: String? = nil, errorMsg: String? = nil) -> SlidingFormPage {
+        
+        let page = SlidingFormPage()
+        
+        page.type = .input
+        page.title = title
+        page.isRequired = isRequired
+        page.desc = desc
+        page.textValue = defaultValue
+        page.textRule = textRule
+        page.errorMsg = errorMsg
+        
+        page.initCommon()
+        
+        let textarea = UITextView()
+        let textareaBottomLineView = UIView()
+        textarea.translatesAutoresizingMaskIntoConstraints = false
+        textareaBottomLineView.translatesAutoresizingMaskIntoConstraints = false
+        page.addSubview(textarea)
+        page.addSubview(textareaBottomLineView)
+        
+        textarea.delegate = page
+        textarea.isUserInteractionEnabled = true
+        textarea.keyboardDismissMode = .onDrag
+        textarea.backgroundColor = UIColor.clear
+        textarea.textColor = page.conf.textColor
+        if let font = UIFont(name: page.conf.customFontName, size: page.conf.textareaTextSize) {
+            textarea.font = font
+        } else {
+            textarea.font = UIFont(name: "System", size: page.conf.textareaTextSize)
+        }
+        
+        textareaBottomLineView.backgroundColor = page.conf.textColor
+        
+        
+        let textareaTopConstraint = NSLayoutConstraint(item: textarea, attribute: .top, relatedBy: .equal, toItem: page.errorMsgLbl, attribute: .bottom, multiplier: 1, constant: 8)
+        let textareaBottomConstraint = NSLayoutConstraint(item: textarea, attribute: .bottom, relatedBy: .equal, toItem: page.descLbl, attribute: .top, multiplier: 1, constant: -8)
+        let textareaLeadingConstraint = NSLayoutConstraint(item: textarea, attribute: .leading, relatedBy: .equal, toItem: page, attribute: .leading, multiplier: 1, constant: 20)
+        let textareaTrailingConstraint = NSLayoutConstraint(item: textarea, attribute: .trailing, relatedBy: .equal, toItem: page, attribute: .trailing, multiplier: 1, constant: -20)
+        page.addConstraint(textareaTopConstraint)
+        page.addConstraint(textareaBottomConstraint)
+        page.addConstraint(textareaLeadingConstraint)
+        page.addConstraint(textareaTrailingConstraint)
+        
+        let textareaBottomLineBottomConstraint = NSLayoutConstraint(item: textareaBottomLineView, attribute: .bottom, relatedBy: .equal, toItem: textarea, attribute: .bottom, multiplier: 1, constant: 0)
+        let textareaBottomLineLeadingConstraint = NSLayoutConstraint(item: textareaBottomLineView, attribute: .leading, relatedBy: .equal, toItem: textarea, attribute: .leading, multiplier: 1, constant: 0)
+        let textareaBottomLineTrailingConstraint = NSLayoutConstraint(item: textareaBottomLineView, attribute: .trailing, relatedBy: .equal, toItem: textarea, attribute: .trailing, multiplier: 1, constant: 0)
+        let textareaBottomLineHeightConstraint = NSLayoutConstraint(item: textareaBottomLineView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 2)
+        page.addConstraint(textareaBottomLineBottomConstraint)
+        page.addConstraint(textareaBottomLineLeadingConstraint)
+        page.addConstraint(textareaBottomLineTrailingConstraint)
+        page.addConstraint(textareaBottomLineHeightConstraint)
+        
+        if defaultValue != nil {
+            textarea.text = defaultValue!
         }
         
         return page
@@ -354,12 +411,8 @@ class SlidingFormPage: UIView {
         return page
     }
     
-    class func getTextarea() {
-        
-    }
-    
     func handleTextFieldChange(sender: UITextField) {
-        self.inputValue = sender.text
+        self.textValue = sender.text
         
         if self.isFinished {
             self.errorMsgLbl.text = ""
@@ -377,6 +430,20 @@ extension SlidingFormPage: UITextFieldDelegate {
         textField.resignFirstResponder()
         
         return true
+    }
+}
+
+extension SlidingFormPage: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        self.textValue = textView.text
+        
+        if self.isFinished {
+            self.errorMsgLbl.text = ""
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CurrentPageFinished"), object: nil)
+        } else {
+            self.errorMsgLbl.text = self.errorMsg
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CurrentPageUnFinished"), object: nil)
+        }
     }
 }
 
