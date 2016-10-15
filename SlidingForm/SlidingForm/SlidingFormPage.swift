@@ -63,29 +63,20 @@ class SlidingFormPage: UIView {
     var inputFormat: String?
     var inputRule: String? // regular expression
     
-    // for select
-    var selectOptions: [String]?
-    var selectedOptionIndex: Int?
+    // for select, switches, checkbox, and ratio
+    var options = [String]()
+    var optionsValue = [Bool]()
+    var selectedOptionIndex = 0
+    var selectionMax: Int?
+    var selectionMin: Int?
     
-    // for switches
-    var switchesOptions: [String]?
-    var switchesList: [SlidingFormElementSwitch]?
-    var switchesMax: Int?
-    var switchesMin: Int?
-    
-    // for checkbox
-    var checkboxOptions: [String]?
-    var checkboxList: [SlidingFormElementCheckbox]?
-    var checkboxMax: Int?
-    var checkboxMin: Int?
-    
-    // for ratio
-    var ratioOptions: [String]?
-    var ratioList: [SlidingFormElementRatio]?
-    var selectedRatioIndex: Int?
+    // for switches, checkbox, and ratio
+    var tbl: UITableView?
+    var cellList: [String:Any]?
     
     // for textarea
     var textareaValue: String?
+    
     
     func initCommon() {
         
@@ -190,6 +181,32 @@ class SlidingFormPage: UIView {
             self.requiredLbl.text = self.conf.requiredLblText
             self.requiredLbl.alpha = self.isRequired == true ? 1 : 0
         }
+        
+        // tableview for switches, checkbox, and ratio
+        if self.type == .switches || self.type == .checkbox || self.type == .ratio {
+            self.tbl = UITableView()
+            self.tbl!.dataSource = self
+            self.tbl!.delegate = self
+            self.tbl!.allowsSelection = false
+            self.tbl!.showsVerticalScrollIndicator = false
+            self.tbl!.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview(self.tbl!)
+            
+            self.cellList = [String:Any]()
+            
+            let tblTop = NSLayoutConstraint(item: self.tbl!, attribute: .top, relatedBy: .equal, toItem: self.errorMsgLbl, attribute: .bottom, multiplier: 1, constant: 8)
+            let tblBottom = NSLayoutConstraint(item: self.tbl!, attribute: .bottom, relatedBy: .equal, toItem: self.descLbl, attribute: .top, multiplier: 1, constant: -8)
+            let tblLeading = NSLayoutConstraint(item: self.tbl!, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 20)
+            let tblTrailing = NSLayoutConstraint(item: self.tbl!, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: -20)
+            self.addConstraint(tblTop)
+            self.addConstraint(tblBottom)
+            self.addConstraint(tblLeading)
+            self.addConstraint(tblTrailing)
+            
+            self.tbl?.backgroundColor = UIColor.clear
+            self.tbl?.tableFooterView = UIView()
+            self.tbl?.separatorStyle = .none
+        }
     }
     
     class func getInput(withTitle title: String, isRequired: Bool, desc: String?, defaultValue: String? = nil, inputRule: String? = nil, errorMsg: String? = nil) -> SlidingFormPage {
@@ -260,7 +277,7 @@ class SlidingFormPage: UIView {
         page.type = .select
         page.title = title
         page.desc = desc
-        page.selectOptions = selectOptions
+        page.options = selectOptions
         page.selectedOptionIndex = selectedOptionIndex
         
         page.initCommon()
@@ -289,16 +306,52 @@ class SlidingFormPage: UIView {
         return page
     }
     
-    class func getSwitches() {
+    class func getSwitches(withTitle title: String, desc: String?, options: [String], optionsDefaultValue: [Bool], selectionMin: Int = 0, selectionMax: Int = Int.max) -> SlidingFormPage {
+        let page = SlidingFormPage()
         
+        page.type = .switches
+        page.title = title
+        page.desc = desc
+        page.options = options
+        page.optionsValue = optionsDefaultValue
+        page.selectionMin = selectionMin
+        page.selectionMax = selectionMax
+        
+        page.initCommon()
+        
+        return page
     }
     
-    class func getCheckbox() {
+    class func getCheckbox(withTitle title: String, desc: String?, options: [String], optionsDefaultValue: [Bool], selectionMin: Int = 0, selectionMax: Int = Int.max) -> SlidingFormPage {
+        let page = SlidingFormPage()
         
+        page.type = .checkbox
+        page.title = title
+        page.desc = desc
+        page.options = options
+        page.optionsValue = optionsDefaultValue
+        page.selectionMin = selectionMin
+        page.selectionMax = selectionMax
+        
+        page.initCommon()
+        
+        return page
     }
     
-    class func getRatio() {
+    class func getRatio(withTitle title: String, desc: String?, options: [String], selectedOptionIndex: Int = 0) -> SlidingFormPage {
+        let page = SlidingFormPage()
         
+        page.type = .ratio
+        page.title = title
+        page.desc = desc
+        page.options = options
+        page.selectedOptionIndex = selectedOptionIndex
+        page.selectionMin = 1
+        page.selectionMax = 1
+        
+        page.initCommon()
+        
+        return page
     }
     
     class func getTextarea() {
@@ -333,7 +386,7 @@ extension SlidingFormPage: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.selectOptions!.count
+        return self.options.count
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -344,7 +397,7 @@ extension SlidingFormPage: UIPickerViewDelegate, UIPickerViewDataSource {
     {
         let pickerLabel = UILabel()
         pickerLabel.textColor = self.conf.textColor
-        pickerLabel.text = self.selectOptions![row]
+        pickerLabel.text = self.options[row]
         if let font = UIFont(name: self.conf.customFontName, size: self.conf.selectTitleSize) {
             pickerLabel.font = font
         } else {
@@ -358,5 +411,92 @@ extension SlidingFormPage: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return self.conf.selectRowHeight
+    }
+}
+
+extension SlidingFormPage: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.options.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if self.type == .switches {
+            let cell = SlidingFormPageSwitchCell()
+            cell.configureCell(title: self.options[indexPath.row], isActive: self.optionsValue[indexPath.row], toggleCallback:  { isActive in
+                if isActive {
+                    var count = 0
+                    for i in 0..<self.options.count {
+                        if self.optionsValue[i] {
+                            count += 1
+                        }
+                    }
+                    
+                    if count == self.selectionMax {
+                        cell.switchElement.toggleSwitch(animated: false)
+                    } else {
+                        self.optionsValue[indexPath.row] = isActive
+                    }
+                } else {
+                    self.optionsValue[indexPath.row] = isActive
+                }
+                
+            })
+            
+            return cell
+        } else if self.type == .ratio {
+            let cell = SlidingFormPageRatioCell()
+            cell.configureCell(title: self.options[indexPath.row], isSelected: indexPath.row == selectedOptionIndex, toggleCallback:  { isSelected in
+                if indexPath.row != self.selectedOptionIndex {
+                    let temp = self.selectedOptionIndex
+                    self.selectedOptionIndex = indexPath.row
+                    
+                    tableView.reloadData()
+                } else {
+                    cell.ratioElement.toggleRatio(animated: false)
+                }
+            })
+            
+            return cell
+        } else if self.type == .checkbox {
+            let cell = SlidingFormPageCheckboxCell()
+            cell.configureCell(title: self.options[indexPath.row], isSelected: self.optionsValue[indexPath.row], toggleCallback:  { isActive in
+                if isActive {
+                    var count = 0
+                    for i in 0..<self.options.count {
+                        if self.optionsValue[i] {
+                            count += 1
+                        }
+                    }
+                    
+                    if count == self.selectionMax {
+                        tableView.reloadData()
+                    } else {
+                        self.optionsValue[indexPath.row] = isActive
+                    }
+                } else {
+                    self.optionsValue[indexPath.row] = isActive
+                }
+                
+            })
+            
+            return cell
+        } else {
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 30
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     }
 }

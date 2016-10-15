@@ -31,6 +31,7 @@ class SlidingFormPageConfig: NSObject {
     
     var inputTextSize: CGFloat = 20
     var selectTitleSize: CGFloat = 20
+    var switchTitleSize: CGFloat = 18
     
     var selectRowHeight: CGFloat = 20
     var showedSelectRowNumber: CGFloat = 5
@@ -42,8 +43,8 @@ class SlidingFormPageConfig: NSObject {
     var bgColor: UIColor = UIColor(red: 93/255, green: 87/255, blue: 107/255, alpha: 1)
     var warningColor: UIColor = UIColor(red: 1, green: 1, blue: 0, alpha: 1)
     
-    //
-    var customFontName = ""
+    // default font
+    var customFontName = "Futura"
     
     var requiredLblText = NSLocalizedString("*required", comment: "SlidingForm")
     var descLblText = NSLocalizedString("Description:", comment: "SlidingForm")

@@ -274,27 +274,19 @@ class SlidingFormViewController: UIViewController {
                     results.append(page.inputValue ?? "")
                 } else if page.type == .select {
                     // return the list of selected option index and value, e.g. [1, "male"]
-                    results.append([page.selectedOptionIndex ?? 0, page.selectOptions?[page.selectedOptionIndex!]])
+                    results.append([page.selectedOptionIndex, page.options[page.selectedOptionIndex]])
                 } else if page.type == .checkbox {
                     // return a list of checkbox selection list and checkbox options list,
                     // e.g. [[false, true, false, false], ["chrome", "firefox", "opera", "ie"]]
-                    var result = [Bool]()
-                    for i in 0..<page.checkboxList!.count {
-                        result.append(page.checkboxList![i].isChecked)
-                    }
-                    results.append([result, page.checkboxOptions!])
+                    results.append([page.optionsValue, page.options])
                 } else if page.type == .ratio {
                     // return the selected ratio option index and value
                     // e.g. [1, "male"]
-                    results.append([page.selectedRatioIndex, page.ratioOptions?[page.selectedRatioIndex!]])
+                    results.append([page.selectedOptionIndex, page.options[page.selectedOptionIndex]])
                 } else if page.type == .switches {
                     // return a list of switch activation list and switches options list,
                     // e.g. [[false, true], ["nightmode", "notification"]]
-                    var result = [Bool]()
-                    for i in 0..<page.switchesList!.count {
-                        result.append(page.switchesList![i].isActive)
-                    }
-                    results.append([result, page.switchesOptions!])
+                    results.append([page.optionsValue, page.options])
                 } else if page.type == .textarea {
                     // return the text, e.g. "I would rate this app 5 stars"
                     results.append(page.textareaValue ?? "")
