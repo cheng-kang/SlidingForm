@@ -36,7 +36,7 @@ self.present(vc, animated: true, completion: nil)
 ## Screen Shots
 
 ### Input
-![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.45.48.png?raw=true)
+![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.45.48.png?raw=true | width=100)
 
 ### Ratio
 ![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.49.41.png?raw=true)
