@@ -36,22 +36,22 @@ self.present(vc, animated: true, completion: nil)
 ## Screen Shots
 
 ### Input
-![](./Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.45.48.png =250x)
+<img src="./Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.45.48.png" width="250">
 
 ### Ratio
-![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.49.41.png?raw=true)
+<img src="./Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.49.41.png" width="250">
 
 ### Text Area
-![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.49.54.png?raw=true)
+<img src="./Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.49.54.png" width="250">
 
 ### Select
-![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.50.32.png?raw=true)
+<img src="./Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.50.32.png" width="250">
 
 ### Input with Validation
-![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.51.01.png?raw=true)
+<img src="./Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.51.01.png" width="250">
 
 ### Checkbox
-![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.52.10.png?raw=true)
+<img src="./Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.52.10.png" width="250">
 
 ### Switch
-![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.52.15.png?raw=true)
+<img src="./Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.52.15.png" width="250">
