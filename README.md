@@ -3,13 +3,13 @@ SlidingForm generates sliding forms. This lib is written in Swift3.
 
 ## Usage
 
-1. Customize Configuration
+1.Customize Configuration
 ```
 // e.g. change font
 SlidingFormPageConfig.sharedInstance.customFontName = "Futura"
 ```
 
-2. Create a sliding form and present it
+2.Create a sliding form and present it
 ```
 
 let vc = SlidingFormViewController.vc(
