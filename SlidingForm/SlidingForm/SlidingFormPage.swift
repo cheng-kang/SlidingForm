@@ -31,7 +31,9 @@ class SlidingFormPage: UIView {
                 }
             }
         } else if self.type == .select {
-            // nothing
+            return true
+        } else if self.type == .ratio {
+            return true
         } else {
             var count = 0
             for i in 0..<optionsValue.count {
