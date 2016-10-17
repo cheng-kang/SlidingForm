@@ -34,3 +34,24 @@ self.present(vc, animated: true, completion: nil)
 ```
 
 ## Screen Shots
+
+### Input
+![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.45.48.png?raw=true)
+
+### Ratio
+![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.49.41.png?raw=true)
+
+### Text Area
+![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.49.54.png?raw=true)
+
+### Select
+![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.50.32.png?raw=true)
+
+### Input with Validation
+![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.51.01.png?raw=true)
+
+### Checkbox
+![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.52.10.png?raw=true)
+
+### Switch
+![](https://github.com/cheng-kang/SlidingForm/blob/master/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8817%E6%97%A5%20%E4%B8%8B%E5%8D%884.52.15.png?raw=true)
