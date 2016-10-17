@@ -89,17 +89,41 @@
 			isa = PBXGroup;
 			children = (
 				EDC5212C1DAD7E41007039FC /* SlidingFormViewController.swift */,
-				EDC5212E1DAD7E52007039FC /* SlidingFormPage.swift */,
 				EDC521311DAD7E52007039FC /* SlidingFormPageConfig.swift */,
-				EDC5212F1DAD7E52007039FC /* SlidingFormElementCheckbox.swift */,
-				EDC521301DAD7E52007039FC /* SlidingFormElementRatio.swift */,
-				EDC521321DAD7E52007039FC /* SlidingFormElementSwitch.swift */,
-				ED660C701DA9506C00411874 /* SlidingForm.storyboard */,
+				EDF780EA1DB523F900103F6C /* View */,
+			);
+			name = SwiftSlidingForm;
+			sourceTree = "<group>";
+		};
+		EDF780E81DB523C500103F6C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
 				EDF780E21DB155D600103F6C /* SlidingFormPageSwitchCell.swift */,
 				EDF780E41DB2806E00103F6C /* SlidingFormPageRatioCell.swift */,
 				EDF780E61DB29B3000103F6C /* SlidingFormPageCheckboxCell.swift */,
 			);
-			name = SwiftSlidingForm;
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		EDF780E91DB523D200103F6C /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+				EDC5212F1DAD7E52007039FC /* SlidingFormElementCheckbox.swift */,
+				EDC521301DAD7E52007039FC /* SlidingFormElementRatio.swift */,
+				EDC521321DAD7E52007039FC /* SlidingFormElementSwitch.swift */,
+				EDF780E81DB523C500103F6C /* Cells */,
+			);
+			name = Elements;
+			sourceTree = "<group>";
+		};
+		EDF780EA1DB523F900103F6C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EDC5212E1DAD7E52007039FC /* SlidingFormPage.swift */,
+				ED660C701DA9506C00411874 /* SlidingForm.storyboard */,
+				EDF780E91DB523D200103F6C /* Elements */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

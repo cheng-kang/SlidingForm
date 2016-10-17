@@ -19,14 +19,6 @@ enum SlidingFormPageType: String {
 
 class SlidingFormPage: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
     let conf = SlidingFormPageConfig.sharedInstance
     
     var isFinished: Bool {
@@ -41,6 +33,16 @@ class SlidingFormPage: UIView {
         } else if self.type == .select {
             // nothing
         } else {
+            var count = 0
+            for i in 0..<optionsValue.count {
+                if optionsValue[i] {
+                    count += 1
+                }
+            }
+            
+            if count < selectionMin! {
+                return false
+            }
         }
         
         return true
@@ -72,7 +74,6 @@ class SlidingFormPage: UIView {
     
     // for switches, checkbox, and ratio
     var tbl: UITableView?
-    var cellList: [String:Any]?
     
     
     func initCommon() {
@@ -189,8 +190,6 @@ class SlidingFormPage: UIView {
             self.tbl!.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(self.tbl!)
             
-            self.cellList = [String:Any]()
-            
             let tblTop = NSLayoutConstraint(item: self.tbl!, attribute: .top, relatedBy: .equal, toItem: self.errorMsgLbl, attribute: .bottom, multiplier: 1, constant: 8)
             let tblBottom = NSLayoutConstraint(item: self.tbl!, attribute: .bottom, relatedBy: .equal, toItem: self.descLbl, attribute: .top, multiplier: 1, constant: -8)
             let tblLeading = NSLayoutConstraint(item: self.tbl!, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 20)
@@ -240,7 +239,7 @@ class SlidingFormPage: UIView {
             textField.font = UIFont(name: "System", size: page.conf.inputTextSize)
         }
         
-        textFiledBottomLineView.backgroundColor = page.conf.textColor
+        textFiledBottomLineView.backgroundColor = page.conf.textBottomLineColor
         
         
         let textFieldCenterYConstraint = NSLayoutConstraint(item: textField, attribute: .centerY, relatedBy: .equal, toItem: page, attribute: .centerY, multiplier: 1, constant: 0)
@@ -300,7 +299,7 @@ class SlidingFormPage: UIView {
             textarea.font = UIFont(name: "System", size: page.conf.textareaTextSize)
         }
         
-        textareaBottomLineView.backgroundColor = page.conf.textColor
+        textareaBottomLineView.backgroundColor = page.conf.textBottomLineColor
         
         
         let textareaTopConstraint = NSLayoutConstraint(item: textarea, attribute: .top, relatedBy: .equal, toItem: page.errorMsgLbl, attribute: .bottom, multiplier: 1, constant: 8)
@@ -497,6 +496,35 @@ extension SlidingFormPage: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if self.type == .switches {
             let cell = SlidingFormPageSwitchCell()
+            
+            if let width = conf.switchWidth {
+                cell.switchElement.width = width
+            }
+            
+            if let height = conf.switchHeight {
+                cell.switchElement.height = height
+            }
+            
+            if let borderWidth = conf.switchBorderWidth {
+                cell.switchElement.borderWidth = borderWidth
+            }
+            
+            if let borderColor = conf.switchBorderColor {
+                cell.switchElement.borderColor = borderColor
+            }
+            
+            if let bgColor = conf.switchBgColor {
+                cell.switchElement.bgColor = bgColor
+            }
+            
+            if let bgColorActive = conf.switchBgColorActive {
+                cell.switchElement.bgColorActive = bgColorActive
+            }
+            
+            if let buttonColor = conf.switchButtonColor {
+                cell.switchElement.buttonColor = buttonColor
+            }
+            
             cell.configureCell(title: self.options[indexPath.row], isActive: self.optionsValue[indexPath.row], toggleCallback:  { isActive in
                 if isActive {
                     var count = 0
@@ -515,14 +543,45 @@ extension SlidingFormPage: UITableViewDataSource, UITableViewDelegate {
                     self.optionsValue[indexPath.row] = isActive
                 }
                 
+                if self.isFinished {
+                    self.errorMsgLbl.text = ""
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CurrentPageFinished"), object: nil)
+                } else {
+                    self.errorMsgLbl.text = self.errorMsg
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CurrentPageUnFinished"), object: nil)
+                }
             })
             
             return cell
         } else if self.type == .ratio {
             let cell = SlidingFormPageRatioCell()
+            
+            if let width = conf.ratioWidth {
+                cell.ratioElement.width = width
+            }
+            
+            if let borderWidth = conf.ratioBorderWidth {
+                cell.ratioElement.borderWidth = borderWidth
+            }
+            
+            if let dotWidth = conf.ratioDotWidth {
+                cell.ratioElement.dotWidth = dotWidth
+            }
+            
+            if let borderColor = conf.ratioBorderColor {
+                cell.ratioElement.borderColor = borderColor
+            }
+            
+            if let bgColor = conf.ratioBgColor {
+                cell.ratioElement.bgColor = bgColor
+            }
+            
+            if let dotColor = conf.ratioDotColor {
+                cell.ratioElement.dotColor = dotColor
+            }
+            
             cell.configureCell(title: self.options[indexPath.row], isSelected: indexPath.row == selectedOptionIndex, toggleCallback:  { isSelected in
                 if indexPath.row != self.selectedOptionIndex {
-                    let temp = self.selectedOptionIndex
                     self.selectedOptionIndex = indexPath.row
                     
                     tableView.reloadData()
@@ -534,6 +593,31 @@ extension SlidingFormPage: UITableViewDataSource, UITableViewDelegate {
             return cell
         } else if self.type == .checkbox {
             let cell = SlidingFormPageCheckboxCell()
+            
+            if let width = conf.checkboxWidth {
+                cell.checkboxElement.width = width
+            }
+            
+            if let borderWidth = conf.checkboxBorderWidth {
+                cell.checkboxElement.borderWidth = borderWidth
+            }
+            
+            if let dotWidth = conf.checkboxDotWidth {
+                cell.checkboxElement.dotWidth = dotWidth
+            }
+            
+            if let borderColor = conf.checkboxBorderColor {
+                cell.checkboxElement.borderColor = borderColor
+            }
+            
+            if let bgColor = conf.checkboxBgColor {
+                cell.checkboxElement.bgColor = bgColor
+            }
+            
+            if let dotColor = conf.checkboxDotColor {
+                cell.checkboxElement.dotColor = dotColor
+            }
+            
             cell.configureCell(title: self.options[indexPath.row], isSelected: self.optionsValue[indexPath.row], toggleCallback:  { isActive in
                 if isActive {
                     var count = 0
@@ -552,6 +636,13 @@ extension SlidingFormPage: UITableViewDataSource, UITableViewDelegate {
                     self.optionsValue[indexPath.row] = isActive
                 }
                 
+                if self.isFinished {
+                    self.errorMsgLbl.text = ""
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CurrentPageFinished"), object: nil)
+                } else {
+                    self.errorMsgLbl.text = self.errorMsg
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CurrentPageUnFinished"), object: nil)
+                }
             })
             
             return cell
