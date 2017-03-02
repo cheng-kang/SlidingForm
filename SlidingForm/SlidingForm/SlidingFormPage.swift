@@ -207,7 +207,7 @@ class SlidingFormPage: UIView {
         }
     }
     
-    class func getInput(withTitle title: String, isRequired: Bool, desc: String?, defaultValue: String? = nil, textRule: String? = nil, errorMsg: String? = nil) -> SlidingFormPage {
+    class func getInput(withTitle title: String, isRequired: Bool, desc: String? = nil, defaultValue: String? = nil, textRule: String? = nil, errorMsg: String? = nil) -> SlidingFormPage {
         let page = SlidingFormPage()
         
         page.type = .input
@@ -269,7 +269,7 @@ class SlidingFormPage: UIView {
         return page
     }
     
-    class func getTextarea(withTitle title: String, isRequired: Bool, desc: String?, defaultValue: String? = nil, textRule: String? = nil, errorMsg: String? = nil) -> SlidingFormPage {
+    class func getTextarea(withTitle title: String, isRequired: Bool, desc: String? = nil, defaultValue: String? = nil, textRule: String? = nil, errorMsg: String? = nil) -> SlidingFormPage {
         
         let page = SlidingFormPage()
         
@@ -329,7 +329,7 @@ class SlidingFormPage: UIView {
         return page
     }
     
-    class func getSelect(withTitle title: String, desc: String?, selectOptions: [String], selectedOptionIndex: Int = 0) -> SlidingFormPage {
+    class func getSelect(withTitle title: String, desc: String? = nil, selectOptions: [String], selectedOptionIndex: Int = 0) -> SlidingFormPage {
         let page = SlidingFormPage()
         
         page.type = .select
@@ -364,7 +364,7 @@ class SlidingFormPage: UIView {
         return page
     }
     
-    class func getSwitches(withTitle title: String, desc: String?, options: [String], optionsDefaultValue: [Bool], selectionMin: Int = 0, selectionMax: Int = Int.max) -> SlidingFormPage {
+    class func getSwitches(withTitle title: String, desc: String? = nil, options: [String], optionsDefaultValue: [Bool], selectionMin: Int = 0, selectionMax: Int = Int.max) -> SlidingFormPage {
         let page = SlidingFormPage()
         
         page.type = .switches
@@ -380,7 +380,7 @@ class SlidingFormPage: UIView {
         return page
     }
     
-    class func getCheckbox(withTitle title: String, desc: String?, options: [String], optionsDefaultValue: [Bool], selectionMin: Int = 0, selectionMax: Int = Int.max) -> SlidingFormPage {
+    class func getCheckbox(withTitle title: String, desc: String? = nil, options: [String], optionsDefaultValue: [Bool], selectionMin: Int = 0, selectionMax: Int = Int.max) -> SlidingFormPage {
         let page = SlidingFormPage()
         
         page.type = .checkbox
@@ -396,7 +396,7 @@ class SlidingFormPage: UIView {
         return page
     }
     
-    class func getRatio(withTitle title: String, desc: String?, options: [String], selectedOptionIndex: Int = 0) -> SlidingFormPage {
+    class func getRatio(withTitle title: String, desc: String? = nil, options: [String], selectedOptionIndex: Int = 0) -> SlidingFormPage {
         let page = SlidingFormPage()
         
         page.type = .ratio
@@ -499,34 +499,6 @@ extension SlidingFormPage: UITableViewDataSource, UITableViewDelegate {
         if self.type == .switches {
             let cell = SlidingFormPageSwitchCell()
             
-            if let width = conf.switchWidth {
-                cell.switchElement.width = width
-            }
-            
-            if let height = conf.switchHeight {
-                cell.switchElement.height = height
-            }
-            
-            if let borderWidth = conf.switchBorderWidth {
-                cell.switchElement.borderWidth = borderWidth
-            }
-            
-            if let borderColor = conf.switchBorderColor {
-                cell.switchElement.borderColor = borderColor
-            }
-            
-            if let bgColor = conf.switchBgColor {
-                cell.switchElement.bgColor = bgColor
-            }
-            
-            if let bgColorActive = conf.switchBgColorActive {
-                cell.switchElement.bgColorActive = bgColorActive
-            }
-            
-            if let buttonColor = conf.switchButtonColor {
-                cell.switchElement.buttonColor = buttonColor
-            }
-            
             cell.configureCell(title: self.options[indexPath.row], isActive: self.optionsValue[indexPath.row], toggleCallback:  { isActive in
                 if isActive {
                     var count = 0
@@ -558,30 +530,6 @@ extension SlidingFormPage: UITableViewDataSource, UITableViewDelegate {
         } else if self.type == .ratio {
             let cell = SlidingFormPageRatioCell()
             
-            if let width = conf.ratioWidth {
-                cell.ratioElement.width = width
-            }
-            
-            if let borderWidth = conf.ratioBorderWidth {
-                cell.ratioElement.borderWidth = borderWidth
-            }
-            
-            if let dotWidth = conf.ratioDotWidth {
-                cell.ratioElement.dotWidth = dotWidth
-            }
-            
-            if let borderColor = conf.ratioBorderColor {
-                cell.ratioElement.borderColor = borderColor
-            }
-            
-            if let bgColor = conf.ratioBgColor {
-                cell.ratioElement.bgColor = bgColor
-            }
-            
-            if let dotColor = conf.ratioDotColor {
-                cell.ratioElement.dotColor = dotColor
-            }
-            
             cell.configureCell(title: self.options[indexPath.row], isSelected: indexPath.row == selectedOptionIndex, toggleCallback:  { isSelected in
                 if indexPath.row != self.selectedOptionIndex {
                     self.selectedOptionIndex = indexPath.row
@@ -595,30 +543,6 @@ extension SlidingFormPage: UITableViewDataSource, UITableViewDelegate {
             return cell
         } else if self.type == .checkbox {
             let cell = SlidingFormPageCheckboxCell()
-            
-            if let width = conf.checkboxWidth {
-                cell.checkboxElement.width = width
-            }
-            
-            if let borderWidth = conf.checkboxBorderWidth {
-                cell.checkboxElement.borderWidth = borderWidth
-            }
-            
-            if let dotWidth = conf.checkboxDotWidth {
-                cell.checkboxElement.dotWidth = dotWidth
-            }
-            
-            if let borderColor = conf.checkboxBorderColor {
-                cell.checkboxElement.borderColor = borderColor
-            }
-            
-            if let bgColor = conf.checkboxBgColor {
-                cell.checkboxElement.bgColor = bgColor
-            }
-            
-            if let dotColor = conf.checkboxDotColor {
-                cell.checkboxElement.dotColor = dotColor
-            }
             
             cell.configureCell(title: self.options[indexPath.row], isSelected: self.optionsValue[indexPath.row], toggleCallback:  { isActive in
                 if isActive {

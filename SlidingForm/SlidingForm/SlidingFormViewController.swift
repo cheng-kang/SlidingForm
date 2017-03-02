@@ -9,10 +9,11 @@
 import UIKit
 
 class SlidingFormViewController: UIViewController {
-    class func vc(withFormTitle title: String, pages: [SlidingFormPage], currentPageIndex: Int = 0, finishCallback: ((_ results: [Any])->())?) -> SlidingFormViewController {
+    class func vc(withFormTitle title: String, pages: [SlidingFormPage], currentPageIndex: Int = 0, cancelCallback: (()->())? = nil, finishCallback: ((_ results: [Any])->())?) -> SlidingFormViewController {
         let sb = UIStoryboard.init(name: "SlidingForm", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "SlidingFormViewController") as! SlidingFormViewController
         
+        vc.cancelCallback = cancelCallback
         vc.finishCallback = finishCallback
         
         vc.formTitile = title
@@ -28,6 +29,7 @@ class SlidingFormViewController: UIViewController {
     //                 (the nextBtn becomes finishBtn when it's the last page)
     // results:  contains result of each page in the order of the pages
     // note that elements in the result may have different data type according to related page type
+    var cancelCallback: (()->())?
     var finishCallback: ((_ results: [Any])->())?
     
     let cancelBtn = UIButton()
@@ -118,18 +120,6 @@ class SlidingFormViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(SlidingFormViewController.handleCurrentPageUnfinished), name: NSNotification.Name(rawValue: "CurrentPageUnFinished"), object: nil)
     }
     
-    func handleTap(sender: UITapGestureRecognizer) {
-        self.view.endEditing(true)
-    }
-    
-    func handleCurrentPageFinished() {
-        self.nextBtn.isEnabled = true
-    }
-    
-    func handleCurrentPageUnfinished() {
-        self.nextBtn.isEnabled = false
-    }
-    
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "CurrentPageFinished"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "CurrentPageUnFinished"), object: nil)
@@ -152,6 +142,7 @@ class SlidingFormViewController: UIViewController {
             self.scrollview.contentSize = CGSize(width: boxWidth*CGFloat(self.pages.count), height: boxHeight)
         }
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -177,7 +168,8 @@ class SlidingFormViewController: UIViewController {
         self.pageLbl.translatesAutoresizingMaskIntoConstraints = false
         
         // init cancelBtn
-        self.cancelBtn.setImage(UIImage(named: "Dismiss"), for: .normal)
+        self.cancelBtn.setImage(UIImage(named: "Dismiss")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        self.cancelBtn.tintColor = config.textColor
         
         self.cancelBtn.addTarget(self, action: #selector(SlidingFormViewController.cancelBtnClick), for: .touchUpInside)
         
@@ -199,7 +191,7 @@ class SlidingFormViewController: UIViewController {
         
         
         // init page btns
-        self.prevBtn.tintColor = config.textColor
+        self.prevBtn.setTitleColor(config.textColor, for: .normal)
         self.prevBtn.setTitleColor(config.textColorHighlighted, for: .highlighted)
         self.prevBtn.setTitleColor(config.textColorHighlighted, for: .disabled)
         
@@ -209,7 +201,7 @@ class SlidingFormViewController: UIViewController {
             self.prevBtn.titleLabel?.font = UIFont(name: "System", size: config.pageBtnSize)
         }
         
-        self.nextBtn.tintColor = config.textColor
+        self.nextBtn.setTitleColor(config.textColor, for: .normal)
         self.nextBtn.setTitleColor(config.textColorHighlighted, for: .highlighted)
         self.nextBtn.setTitleColor(config.textColorHighlighted, for: .disabled)
         
@@ -261,6 +253,19 @@ class SlidingFormViewController: UIViewController {
         self.view.addConstraints([cancelBtnWidthConstraint, cancelBtnHeightConstraint, cancelBtnLeadingConstraint, cancelBtnBottomToNameLblConstraint, titleLblTopConstaint, titleLblLeftConstraint, pageLblLeftConstraint, pageLblBottomConstraint, scroolviewHeightConstraint, scroolviewLeftConstraint, scroolviewRightConstraint, scroolviewVerticalCenterConstraint, prevBtnLeftConstraint, prevBtnToScrollviewConstraint, nextBtnTopConstraint, nextBtnLeftToPrevBtnConstraint])
     }
     
+    
+    func handleTap(sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+    
+    func handleCurrentPageFinished() {
+        self.nextBtn.isEnabled = true
+    }
+    
+    func handleCurrentPageUnfinished() {
+        self.nextBtn.isEnabled = false
+    }
+    
     func prevBtnClick() {
         if !isFirstPage {
             self.currentPageIndex -= 1
@@ -305,6 +310,7 @@ class SlidingFormViewController: UIViewController {
     }
     
     func cancelBtnClick() {
+        self.cancelCallback?()
         self.dismiss(animated: true, completion: nil)
     }
 

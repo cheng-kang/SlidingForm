@@ -8,7 +8,9 @@
 
 import UIKit
 
-class SlidingFormElementRatio: UIView {
+class SlidingFormElementRadio: UIView {
+    
+    let conf = SlidingFormPageConfig.sharedInstance
     
     var isSelected: Bool = false
     
@@ -16,26 +18,18 @@ class SlidingFormElementRatio: UIView {
     
     let dotView = UIView()
     
-    var width: CGFloat = 14
-    var borderWidth: CGFloat = 2
-    var dotWidth: CGFloat = 4
-    
-    var borderColor: UIColor = UIColor(red: 240/255, green: 239/255, blue: 241/255, alpha: 1)
-    var bgColor: UIColor = UIColor(red: 240/255, green: 239/255, blue: 241/255, alpha: 1)
-    var dotColor: UIColor = UIColor(red: 68/255, green: 64/255, blue: 78/255, alpha: 1)
-    
     func initView(isSelected: Bool) {
-        self.backgroundColor = bgColor
-        self.layer.borderWidth = borderWidth
-        self.layer.borderColor = borderColor.cgColor
-        self.layer.cornerRadius = width / 2
+        self.backgroundColor = conf.radioBgColor
+        self.layer.borderWidth = conf.radioBorderWidth
+        self.layer.borderColor = conf.radioBorderColor.cgColor
+        self.layer.cornerRadius = conf.radioWidth / 2
         
-        self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: width, height: width)
+        self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: conf.radioWidth, height: conf.radioWidth)
         
-        dotView.backgroundColor = dotColor
-        dotView.frame.size = CGSize(width: dotWidth, height: dotWidth)
+        dotView.backgroundColor = conf.radioDotColor
+        dotView.frame.size = CGSize(width: conf.radioDotWidth, height: conf.radioDotWidth)
         dotView.center = self.center
-        dotView.layer.cornerRadius = dotWidth / 2
+        dotView.layer.cornerRadius = conf.radioDotWidth / 2
         self.addSubview(dotView)
         
         dotView.alpha = 0
@@ -44,7 +38,7 @@ class SlidingFormElementRatio: UIView {
             toggleRatio(animated: false)
         }
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(SlidingFormElementRatio.handleTap(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SlidingFormElementRadio.handleTap(_:)))
         self.addGestureRecognizer(tap)
     }
     

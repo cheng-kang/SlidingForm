@@ -10,29 +10,23 @@ import UIKit
 
 class SlidingFormElementCheckbox: UIView {
     
+    let conf = SlidingFormPageConfig.sharedInstance
+    
     var isChecked: Bool = false
     
     var toggleCallback: ((_ isSelected: Bool)->())!
     
     let dotView = UIView()
     
-    var width: CGFloat = 14
-    var borderWidth: CGFloat = 2
-    var dotWidth: CGFloat = 10
-    
-    var borderColor: UIColor = UIColor(red: 240/255, green: 239/255, blue: 241/255, alpha: 1)
-    var bgColor: UIColor = UIColor(red: 240/255, green: 239/255, blue: 241/255, alpha: 1)
-    var dotColor: UIColor = UIColor(red: 68/255, green: 64/255, blue: 78/255, alpha: 1)
-    
     func initView(isSelected: Bool) {
-        self.backgroundColor = bgColor
-        self.layer.borderWidth = borderWidth
-        self.layer.borderColor = borderColor.cgColor
+        self.backgroundColor = conf.checkboxBgColor
+        self.layer.borderWidth = conf.checkboxBorderWidth
+        self.layer.borderColor = conf.checkboxBorderColor.cgColor
         
-        self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: width, height: width)
+        self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: conf.checkboxWidth, height: conf.checkboxWidth)
         
-        dotView.backgroundColor = dotColor
-        dotView.frame.size = CGSize(width: dotWidth, height: dotWidth)
+        dotView.backgroundColor = conf.checkboxDotColor
+        dotView.frame.size = CGSize(width: conf.checkboxDotWidth, height: conf.checkboxDotWidth)
         dotView.center = self.center
         self.addSubview(dotView)
         
@@ -42,7 +36,7 @@ class SlidingFormElementCheckbox: UIView {
             toggleCheckbox(animated: false)
         }
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(SlidingFormElementRatio.handleTap(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SlidingFormElementCheckbox.handleTap(_:)))
         self.addGestureRecognizer(tap)
     }
     

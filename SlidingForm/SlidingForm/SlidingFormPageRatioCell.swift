@@ -11,7 +11,7 @@ import UIKit
 class SlidingFormPageRatioCell: UITableViewCell {
     
     let titleLbl = UILabel()
-    let ratioElement = SlidingFormElementRatio()
+    let ratioElement = SlidingFormElementRadio()
 
     override func awakeFromNib() {
         super.awakeFromNib()

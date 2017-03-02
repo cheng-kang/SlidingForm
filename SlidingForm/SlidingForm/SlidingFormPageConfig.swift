@@ -44,15 +44,15 @@ class SlidingFormPageConfig: NSObject {
     var showedSelectRowNumber: CGFloat = 5
     
     // color
-    var textColor: UIColor = UIColor(red: 252/255, green: 252/255, blue: 252/255, alpha: 1)
-    var textColorHighlighted: UIColor = UIColor(red: 252/255, green: 252/255, blue: 252/255, alpha: 0.7)
-    var textBottomLineColor: UIColor = UIColor(red: 252/255, green: 252/255, blue: 252/255, alpha: 1)
-    var descColor: UIColor = UIColor(red: 240/255, green: 239/255, blue: 241/255, alpha: 0.7)
-    var bgColor: UIColor = UIColor(red: 93/255, green: 87/255, blue: 107/255, alpha: 1)
-    var warningColor: UIColor = UIColor(red: 1, green: 1, blue: 0, alpha: 1)
+    var textColor: UIColor = UIColor.black
+    var textColorHighlighted: UIColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
+    var descColor: UIColor = UIColor(red: 93/255, green: 93/255, blue: 93/255, alpha: 1)
+    var textBottomLineColor: UIColor = UIColor.black
+    var bgColor: UIColor = UIColor.white
+    var warningColor: UIColor = UIColor.red
     
-    // default font
-    var customFontName = "Futura"
+    // default font family
+    var customFontName = "Didot"
     
     // texts
     var requiredLblText = NSLocalizedString("*required", comment: "SlidingForm")
@@ -61,33 +61,32 @@ class SlidingFormPageConfig: NSObject {
     
     // MARK: Switch Config
     
-    var switchWidth: CGFloat?
-    var switchHeight: CGFloat?
-    var switchBorderWidth: CGFloat?
+    var switchWidth: CGFloat = 50
+    var switchHeight: CGFloat = 25
+    var switchBorderWidth: CGFloat = 1
     
-    var switchBorderColor: UIColor?
-    var switchBgColor: UIColor?
-    var switchBgColorActive: UIColor?
-    var switchButtonColor: UIColor?
+    var switchBorderColor: UIColor = UIColor.black
+    var switchBgColor: UIColor = UIColor.white
+    var switchBgColorActive: UIColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)
+    var switchButtonColor: UIColor = UIColor.black
     
     // MARK: Checkbox Config
     
-    var checkboxWidth: CGFloat?
-    var checkboxBorderWidth: CGFloat?
-    var checkboxDotWidth: CGFloat?
+    var checkboxWidth: CGFloat = 14
+    var checkboxBorderWidth: CGFloat = 2
+    var checkboxDotWidth: CGFloat = 8
     
-    var checkboxBorderColor: UIColor?
-    var checkboxBgColor: UIColor?
-    var checkboxDotColor: UIColor?
+    var checkboxBorderColor: UIColor = UIColor.black
+    var checkboxBgColor: UIColor = UIColor.white
+    var checkboxDotColor: UIColor = UIColor.black
     
+    // MARK: radio Config
     
-    // MARK: Ratio Config
+    var radioWidth: CGFloat = 14
+    var radioBorderWidth: CGFloat = 2
+    var radioDotWidth: CGFloat = 4
     
-    var ratioWidth: CGFloat?
-    var ratioBorderWidth: CGFloat?
-    var ratioDotWidth: CGFloat?
-    
-    var ratioBorderColor: UIColor?
-    var ratioBgColor: UIColor?
-    var ratioDotColor: UIColor?
+    var radioBorderColor: UIColor = UIColor.black
+    var radioBgColor: UIColor = UIColor.white
+    var radioDotColor: UIColor = UIColor.black
 }
