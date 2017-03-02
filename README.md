@@ -16,7 +16,7 @@ You can download the project and try it.
 ## Usage
 
 1.Customize Configuration (optional)
-```
+```Swift
 // e.g. change font
 override func viewDidAppear(_ animated: Bool) {
     // Customize SlidingForm layout
@@ -25,7 +25,7 @@ override func viewDidAppear(_ animated: Bool) {
 ```
 
 2.Create a sliding form and present it
-```
+```Swift
 let vc = SlidingFormViewController.vc(
     withFormTitle: "Settings",
     pages: [
