@@ -1,5 +1,5 @@
 //
-//  SlidingFormPageRatioCell.swift
+//  SlidingFormPageRadioCell.swift
 //  SlidingForm
 //
 //  Created by Ant on 16/10/15.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class SlidingFormPageRatioCell: UITableViewCell {
+class SlidingFormPageRadioCell: UITableViewCell {
     
     let titleLbl = UILabel()
-    let ratioElement = SlidingFormElementRadio()
+    let radioElement = SlidingFormElementRadio()
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,18 +26,18 @@ class SlidingFormPageRatioCell: UITableViewCell {
     
     func configureCell(title: String, isSelected: Bool, toggleCallback: @escaping ((_ isSelected: Bool)->())) {
         self.titleLbl.text = title
-        ratioElement.toggleCallback = toggleCallback
+        radioElement.toggleCallback = toggleCallback
         
         self.backgroundColor = UIColor.clear
         
-        ratioElement.initView(isSelected: isSelected)
+        radioElement.initView(isSelected: isSelected)
         
         self.addSubview(titleLbl)
-        self.addSubview(ratioElement)
+        self.addSubview(radioElement)
         
         self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: UIScreen.main.bounds.width - 40, height: self.frame.height)
         
-        ratioElement.frame = CGRect(x: 0, y: 8, width: 14, height: 14)
+        radioElement.frame = CGRect(x: 0, y: 8, width: 14, height: 14)
         titleLbl.frame = CGRect(x: 22, y: 2, width: self.frame.width - 22, height: 27)
         
         let conf = SlidingFormPageConfig.sharedInstance
@@ -48,12 +48,12 @@ class SlidingFormPageRatioCell: UITableViewCell {
             titleLbl.font = UIFont(name: "System", size: conf.switchTitleSize)
         }
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(SlidingFormPageRatioCell.handleTap(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SlidingFormPageRadioCell.handleTap(_:)))
         self.addGestureRecognizer(tap)
     }
     
     func handleTap(_ sender: UITapGestureRecognizer) {
-        ratioElement.toggleRatio()
+        radioElement.toggleradio()
     }
 
 }

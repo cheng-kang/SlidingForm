@@ -13,7 +13,7 @@ enum SlidingFormPageType: String {
     case select
     case switches
     case checkbox
-    case ratio
+    case radio
     case textarea
 }
 
@@ -32,7 +32,7 @@ class SlidingFormPage: UIView {
             }
         } else if self.type == .select {
             return true
-        } else if self.type == .ratio {
+        } else if self.type == .radio {
             return true
         } else {
             var count = 0
@@ -67,14 +67,14 @@ class SlidingFormPage: UIView {
     var textFormat: String?
     var textRule: String? // regular expression
     
-    // for select, switches, checkbox, and ratio
+    // for select, switches, checkbox, and radio
     var options = [String]()
     var optionsValue = [Bool]()
     var selectedOptionIndex = 0
     var selectionMax: Int?
     var selectionMin: Int?
     
-    // for switches, checkbox, and ratio
+    // for switches, checkbox, and radio
     var tbl: UITableView?
     
     
@@ -182,8 +182,8 @@ class SlidingFormPage: UIView {
             self.requiredLbl.alpha = self.isRequired == true ? 1 : 0
         }
         
-        // tableview for switches, checkbox, and ratio
-        if self.type == .switches || self.type == .checkbox || self.type == .ratio {
+        // tableview for switches, checkbox, and radio
+        if self.type == .switches || self.type == .checkbox || self.type == .radio {
             self.tbl = UITableView()
             self.tbl!.dataSource = self
             self.tbl!.delegate = self
@@ -396,10 +396,10 @@ class SlidingFormPage: UIView {
         return page
     }
     
-    class func getRatio(withTitle title: String, desc: String? = nil, options: [String], selectedOptionIndex: Int = 0) -> SlidingFormPage {
+    class func getRadio(withTitle title: String, desc: String? = nil, options: [String], selectedOptionIndex: Int = 0) -> SlidingFormPage {
         let page = SlidingFormPage()
         
-        page.type = .ratio
+        page.type = .radio
         page.title = title
         page.desc = desc
         page.options = options
@@ -527,8 +527,8 @@ extension SlidingFormPage: UITableViewDataSource, UITableViewDelegate {
             })
             
             return cell
-        } else if self.type == .ratio {
-            let cell = SlidingFormPageRatioCell()
+        } else if self.type == .radio {
+            let cell = SlidingFormPageRadioCell()
             
             cell.configureCell(title: self.options[indexPath.row], isSelected: indexPath.row == selectedOptionIndex, toggleCallback:  { isSelected in
                 if indexPath.row != self.selectedOptionIndex {
@@ -536,7 +536,7 @@ extension SlidingFormPage: UITableViewDataSource, UITableViewDelegate {
                     
                     tableView.reloadData()
                 } else {
-                    cell.ratioElement.toggleRatio(animated: false)
+                    cell.radioElement.toggleradio(animated: false)
                 }
             })
             

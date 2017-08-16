@@ -21,7 +21,7 @@
 		EDC521371DAD7E52007039FC /* SlidingFormElementSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC521321DAD7E52007039FC /* SlidingFormElementSwitch.swift */; };
 		EDCE03071E684716006D676D /* Dismiss.png in Resources */ = {isa = PBXBuildFile; fileRef = EDCE03061E684716006D676D /* Dismiss.png */; };
 		EDF780E31DB155D600103F6C /* SlidingFormPageSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF780E21DB155D600103F6C /* SlidingFormPageSwitchCell.swift */; };
-		EDF780E51DB2806E00103F6C /* SlidingFormPageRatioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF780E41DB2806E00103F6C /* SlidingFormPageRatioCell.swift */; };
+		EDF780E51DB2806E00103F6C /* SlidingFormPageRadioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF780E41DB2806E00103F6C /* SlidingFormPageRadioCell.swift */; };
 		EDF780E71DB29B3000103F6C /* SlidingFormPageCheckboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF780E61DB29B3000103F6C /* SlidingFormPageCheckboxCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +42,7 @@
 		EDC521321DAD7E52007039FC /* SlidingFormElementSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormElementSwitch.swift; sourceTree = "<group>"; };
 		EDCE03061E684716006D676D /* Dismiss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Dismiss.png; sourceTree = "<group>"; };
 		EDF780E21DB155D600103F6C /* SlidingFormPageSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormPageSwitchCell.swift; sourceTree = "<group>"; };
-		EDF780E41DB2806E00103F6C /* SlidingFormPageRatioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormPageRatioCell.swift; sourceTree = "<group>"; };
+		EDF780E41DB2806E00103F6C /* SlidingFormPageRadioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormPageRadioCell.swift; sourceTree = "<group>"; };
 		EDF780E61DB29B3000103F6C /* SlidingFormPageCheckboxCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingFormPageCheckboxCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,7 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				EDF780E21DB155D600103F6C /* SlidingFormPageSwitchCell.swift */,
-				EDF780E41DB2806E00103F6C /* SlidingFormPageRatioCell.swift */,
+				EDF780E41DB2806E00103F6C /* SlidingFormPageRadioCell.swift */,
 				EDF780E61DB29B3000103F6C /* SlidingFormPageCheckboxCell.swift */,
 			);
 			name = Cells;
@@ -207,7 +207,7 @@
 				ED660C521DA94DF400411874 /* ViewController.swift in Sources */,
 				EDC521341DAD7E52007039FC /* SlidingFormElementCheckbox.swift in Sources */,
 				EDC5212D1DAD7E41007039FC /* SlidingFormViewController.swift in Sources */,
-				EDF780E51DB2806E00103F6C /* SlidingFormPageRatioCell.swift in Sources */,
+				EDF780E51DB2806E00103F6C /* SlidingFormPageRadioCell.swift in Sources */,
 				EDC521371DAD7E52007039FC /* SlidingFormElementSwitch.swift in Sources */,
 				EDF780E31DB155D600103F6C /* SlidingFormPageSwitchCell.swift in Sources */,
 				EDC521351DAD7E52007039FC /* SlidingFormElementRadio.swift in Sources */,

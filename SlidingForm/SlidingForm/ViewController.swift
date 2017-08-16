@@ -34,7 +34,7 @@ class ViewController: UIViewController {
                     defaultValue: NSLocalizedString("Default Nickname", comment: "SlidingForm"),
                     errorMsg: "Cannot be empty!"
                 ),
-                SlidingFormPage.getRatio(
+                SlidingFormPage.getRadio(
                     withTitle: "Gender",
                     options: ["Male", "Female", "Other"]
                 ),

@@ -1,5 +1,5 @@
 //
-//  SlidingFormElementRatio.swift
+//  SlidingFormElementRadio.swift
 //  CoupleTimezones
 //
 //  Created by Ant on 16/10/8.
@@ -35,7 +35,7 @@ class SlidingFormElementRadio: UIView {
         dotView.alpha = 0
         
         if isSelected {
-            toggleRatio(animated: false)
+            toggleradio(animated: false)
         }
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(SlidingFormElementRadio.handleTap(_:)))
@@ -43,15 +43,15 @@ class SlidingFormElementRadio: UIView {
     }
     
     func handleTap(_ sender: UITapGestureRecognizer) {
-        self.toggleRatio()
+        self.toggleradio()
     }
     
-    func toggleRatio(animated: Bool = true) {
+    func toggleradio(animated: Bool = true) {
         self.isSelected = !self.isSelected
         let newAlpha: CGFloat = isSelected ? 1 : 0
         
         if animated {
-            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: { 
+            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: {
                 self.dotView.alpha = newAlpha
                 self.toggleCallback(self.isSelected)
                 }, completion: nil)

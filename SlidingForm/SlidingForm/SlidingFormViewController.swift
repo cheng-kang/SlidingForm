@@ -291,7 +291,7 @@ class SlidingFormViewController: UIViewController {
                     // return a list of checkbox selection list and checkbox options list,
                     // e.g. [[false, true, false, false], ["chrome", "firefox", "opera", "ie"]]
                     results.append([page.optionsValue, page.options])
-                } else if page.type == .ratio {
+                } else if page.type == .radio {
                     // return the selected ratio option index and value
                     // e.g. [1, "male"]
                     results.append([page.selectedOptionIndex, page.options[page.selectedOptionIndex]])
